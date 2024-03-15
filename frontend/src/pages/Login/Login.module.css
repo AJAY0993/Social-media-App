@@ -1,0 +1,57 @@
+.btn--back {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+}
+
+.login__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0 1em;
+}
+
+.img__container {
+    aspect-ratio: 9/16;
+    height: 550px;
+    position: relative;
+    transform: translateY(1em);
+}
+
+.post__bg {
+    position: absolute;
+    top: -1em;
+    left: -5em;
+    z-index: -1;
+
+}
+
+
+.login__heading {
+    font-size: 40px;
+    text-align: center;
+    font-weight: var(--fw-bold);
+}
+
+.login__text {
+    font-size: 14px;
+    text-align: center;
+    color: #4A4A4A;
+}
+
+.login__form {
+    display: block;
+    margin: 0 auto;
+}
+
+.link {
+    color: var(--clr-main);
+    text-decoration: underline;
+}
+
+@media(width < 700px) {
+    .img__container {
+        display: none;
+    }
+}

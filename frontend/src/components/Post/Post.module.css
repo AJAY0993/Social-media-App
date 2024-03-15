@@ -1,0 +1,59 @@
+.post {
+    border-bottom: 1px solid var(--clr-text-color2);
+    padding: 2em 0 0;
+
+}
+
+
+
+.user:hover {
+    background-color: transparent !important;
+}
+
+.user {
+    width: 100% !important;
+    margin-left: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.user__wrapper {}
+
+.post__container {
+    max-width: 100%;
+    margin: 0 auto;
+
+}
+
+.post__img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    padding: 1em;
+    display: block;
+    border-radius: 2em;
+    overflow: hidden;
+}
+
+.controller {
+    background-color: var(--clr-secondary);
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--clr-text-color2);
+}
+
+.post svg {
+    font-size: 1.3rem;
+}
+
+.controller {}
+
+.controller>* {
+    cursor: pointer;
+}
+
+.post__text {
+    padding: 1em;
+    color: var(--clr-text-color1);
+}

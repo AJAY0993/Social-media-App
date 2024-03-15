@@ -1,0 +1,13 @@
+.user {
+    width: 100%;
+    padding: 0 2em;
+}
+
+.user:hover {
+    background-color: transparent;
+}
+
+.user div {
+    max-width: 150px;
+    flex-shrink: 1;
+}

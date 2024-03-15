@@ -1,0 +1,96 @@
+.hero {
+    width: 100%;
+    gap: 1em;
+    justify-content: space-between;
+    padding: 2em;
+}
+
+.user__image {
+    min-width: 3rem
+}
+
+.form {
+    flex-grow: 1;
+}
+
+.img__preview {
+    border-radius: .5em;
+    max-width: 95%;
+}
+
+.text__content {
+    flex-grow: 1;
+}
+
+.text__content textarea,
+.text__caption input {
+    display: block;
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 1em;
+    border: 1px solid var(--clr-text-color2);
+    border-radius: 1em;
+}
+
+.text__content textarea:focus {
+    border-color: var(--clr-main);
+    outline: 0;
+}
+
+.text__content textarea::placeholder,
+.text__caption input::placeholder {
+    font-size: inherit;
+    letter-spacing: 2px;
+}
+
+
+#label__file__input {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#file__input {
+    display: none;
+}
+
+.emojiPicker__wrapper {
+    margin-right: auto;
+    margin-left: 1em;
+    position: relative;
+}
+
+.emojiPicker__container {
+    position: absolute;
+    top: 2em;
+}
+
+.btn__wrapper {
+    width: 100px;
+}
+
+@media (max-width:750px) {
+    .hero {
+        padding: 1em;
+    }
+
+    .text__input textarea {
+        font-size: 1rem;
+        padding: .25em .5em;
+        min-height: 6rem;
+    }
+
+    .btn__wrapper {
+        width: 4rem;
+    }
+
+    .btn {
+        padding: .25em .5em;
+        min-width: 4rem;
+        width: auto;
+    }
+
+    .btn svg {
+        font-size: 1rem;
+
+    }
+}

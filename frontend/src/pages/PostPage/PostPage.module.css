@@ -1,0 +1,20 @@
+.user {
+    margin-left: 0;
+    border-bottom: 0;
+}
+
+.user:hover {
+    background-color: transparent;
+}
+
+.post {
+    max-width: 100%;
+}
+
+.postDescription__text {
+    /* max-width: 41ch; */
+}
+
+.comment__box {
+    background-color: var(--clr-text-color2);
+}

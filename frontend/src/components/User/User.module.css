@@ -1,0 +1,28 @@
+.user {
+    width: 100%;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--clr-text-color2);
+    margin: 0 auto;
+    padding: .5em 1em;
+}
+
+.user:hover {
+    background-color: var(--clr-text-color2);
+}
+
+.figure {
+    width: 70%;
+    display: flex;
+    gap: .5em
+}
+
+
+
+.btn__wrapper {
+    width: 30%;
+}
+
+@media(max-width:750px) {}

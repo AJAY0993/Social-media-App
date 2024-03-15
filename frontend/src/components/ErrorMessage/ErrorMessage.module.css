@@ -1,0 +1,9 @@
+.message {
+    color: #b91c1c;
+    background-color: #fef2f2;
+    padding: .25em .5em;
+    border-radius: .2em;
+    letter-spacing: 2px;
+    font-size: .9rem;
+    margin: .5em 0;
+}

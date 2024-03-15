@@ -1,0 +1,42 @@
+.loader__wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(.2em);
+    z-index: 100000;
+
+}
+
+.loader {
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--clr-main);
+    box-shadow: 0 0 0 0 var(--clr-main-light);
+    animation: l2 2s infinite linear;
+    position: relative;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 var(--clr-main-light);
+    animation: inherit;
+    animation-delay: -0.5s;
+}
+
+.loader:after {
+    animation-delay: -1s;
+}
+
+@keyframes l2 {
+    100% {
+        box-shadow: 0 0 0 40px #0000
+    }
+}

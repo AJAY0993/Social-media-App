@@ -1,0 +1,165 @@
+.header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 80px;
+    border: 1px solid black;
+}
+
+
+.nav {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    z-index: 100;
+}
+
+
+.aside {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    width: 350px;
+    border: 1px solid red;
+    overflow-y: scroll;
+}
+
+.aside::-webkit-scrollbar {
+    display: none;
+}
+
+
+.aside__container h2 {
+    padding: 1em;
+}
+
+.main {
+    height: calc(100vh - 80px);
+    width: 100%;
+    background-color: var(--color-stone-100);
+    max-width: 850px;
+    margin: 0 250px;
+    margin-right: 350px;
+    margin-top: 80px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.nav__list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em .5em;
+}
+
+.btn {
+    padding: 1.5em !important;
+}
+
+.nav__list_item {
+    text-align: center;
+    border-radius: 2em;
+    overflow: hidden;
+}
+
+.nav__list_item:last-of-type {
+    justify-self: flex-end;
+    margin-top: auto;
+}
+
+
+.nav__list_link {
+    height: 100%;
+    color: var(--clr-secondary);
+    font-size: 2rem;
+    font-weight: var(--fw-medium);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3em;
+    padding: .25em 0;
+}
+
+
+
+.nav__list_link span {
+    font-size: 1.5rem;
+}
+
+.nav__list_link:global(.active) {
+    color: var(--clr-primary);
+    background-color: var(--clr-main);
+}
+
+.nav__list_link:hover {
+    color: var(--clr-primary);
+    background-color: var(--clr-main-light);
+}
+
+@media (max-width:1050px) {
+    .nav {
+        width: 80px;
+    }
+
+
+    .nav__list_item {
+        border-radius: .25em;
+        aspect-ratio: 1/1;
+
+    }
+
+    .nav__list_link span {
+        display: none;
+    }
+
+    .btn {
+        display: none !important;
+    }
+
+    .main {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width:750px) {
+    .aside {
+        display: none;
+    }
+
+    .main {
+        margin-right: 0;
+    }
+
+    .nav {
+        left: 0;
+        top: calc(100% - 60px);
+        right: 0;
+        height: 60px;
+        width: 100%;
+        padding: .25em 0;
+    }
+
+    .nav__list {
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0 .8em;
+    }
+
+    .nav__list_link {
+        font-size: 1.3rem;
+        padding: .25em 0;
+    }
+
+
+    .main {
+        height: calc(100vh - 160px);
+        margin-left: 0;
+        margin-bottom: 60px;
+    }
+}

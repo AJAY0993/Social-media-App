@@ -1,0 +1,27 @@
+.message {
+    max-width: 40%;
+    width: fit-content;
+    font-size: .9rem;
+    border-radius: .8em;
+    padding: .35em .6em;
+    margin: .5em;
+}
+
+.sent img {
+    display: block;
+    margin-left: auto;
+}
+
+.sent .message {
+    background-color: var(--clr-main);
+    color: var(--clr-primary);
+    border-top-right-radius: 0;
+    margin-left: auto;
+}
+
+.recieved .message {
+    background-color: var(--clr-secondary);
+    color: var(--clr-primary);
+    border-top-left-radius: 0;
+    margin-right: auto;
+}

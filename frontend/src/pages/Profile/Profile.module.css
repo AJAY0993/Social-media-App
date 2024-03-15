@@ -1,0 +1,45 @@
+.profile__container {}
+
+.box {
+    padding: 2em 0;
+    text-align: center;
+}
+
+.box:hover {
+    background-color: var(--clr-text-color2);
+}
+
+.profile {
+    color: var(--clr-text-color1);
+}
+
+.avatar {
+    max-height: 85px;
+    aspect-ratio: 1/1;
+
+    border: 2px solid var(--clr-main);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.btn__container {
+    gap: 1em;
+}
+
+.btn__container :global(.btn) {
+    max-width: 150px;
+}
+
+.profile__stats {
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.profile__stats>* {
+    height: 100px;
+    aspect-ratio: 1/1;
+    text-align: center;
+    border: 1px solid var(--clr-text-color2);
+    padding: 1em;
+    cursor: pointer;
+}

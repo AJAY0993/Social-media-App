@@ -1,0 +1,12 @@
+.user {
+    margin-left: 0;
+    border-bottom: 0;
+}
+
+.user:hover {
+    background-color: transparent;
+}
+
+.comment {
+    border-bottom: 2px solid;
+}
