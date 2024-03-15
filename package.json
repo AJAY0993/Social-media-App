@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd frontend && npm install && cd ../frontend && npm install && npm run build",
-    "start": "cd Backend && node server",
+    "start": "cd backend && node server",
     "dev-start": "cd backend && nodemon server && cd frontend && npm run dev"
   },
   "author": "",
