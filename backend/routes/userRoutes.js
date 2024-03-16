@@ -2,19 +2,29 @@ const Router = require('express').Router({ mergeParams: true });
 const authController = require('../contollers/authController');
 const userController = require('../contollers/userController');
 const conversationRouter = require('./conversationRoutes');
+const upload = require('../middlewares/multer');
+
+const filterUnnecessaryFieldsAndAddImage = require('../middlewares/validateFields');
 
 Router.use('/my/conversations', conversationRouter);
 Router.route('/signup').post(authController.signUp);
 Router.route('/login').post(authController.login);
 Router.route('/forgotPassword').post(authController.forgotPassword);
-Router.route('/myProfile').get(
-  authController.isAuthenticated,
-  (req, res, next) => {
-    req.params.userId = req.user.id;
-    next();
-  },
-  userController.getProfile
-);
+Router.route('/myProfile')
+  .get(
+    authController.isAuthenticated,
+    (req, res, next) => {
+      req.params.userId = req.user.id;
+      next();
+    },
+    userController.getProfile
+  )
+  .patch(
+    authController.isAuthenticated,
+    upload.single('profilePic'),
+    filterUnnecessaryFieldsAndAddImage,
+    userController.updateMe
+  );
 
 Router.route('/').get(
   authController.isAuthenticated,
@@ -26,10 +36,14 @@ Router.route('/:userId').get(
   userController.getProfile
 );
 
-Router.route('/:userId').get(
+Router.route('/myProfile/bookmarks').get(
   authController.isAuthenticated,
-  userController.getProfile
+  userController.getBookmarks
 );
+
+Router.route('/myProfile/bookmarks/:postId')
+  .patch(authController.isAuthenticated, userController.addToBookmarks)
+  .delete(authController.isAuthenticated, userController.removeFromBookmarks);
 
 Router.route('/follow/:followId').patch(
   authController.isAuthenticated,

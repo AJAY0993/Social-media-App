@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate, useNavigation } from "react-router-dom"
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import User from "../User/User"
 import styles from "./Layout.module.css"
 import {
@@ -10,8 +10,13 @@ import { LuMessagesSquare } from "react-icons/lu"
 import { FaRegCircleUser } from "react-icons/fa6"
 import Loader from "../Loader/Loader"
 import ProtectRoute from "../ProtectRoute/ProtectRoute"
-import { useSelector } from "react-redux"
-import { getFollowing, getUserId } from "../../reducer/userSlice"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  addFollowing,
+  getFollowing,
+  getUserId,
+  removeFollowing
+} from "../../reducer/userSlice"
 import useUsers from "../../hooks/useUsers"
 import useFollow from "../../hooks/useFollow"
 import useUnFollow from "../../hooks/useUnFollow"
@@ -24,9 +29,14 @@ import List from "../List/List"
 function Layout() {
   return (
     <ProtectRoute>
-      <div className="container">
-        <header className={styles.header}>
-          <div className={"container " + styles.ping}></div>
+      <div className="container ">
+        <header className={`${styles.header} flex a-center j-between`}>
+          <div className={`  ${styles.logo}`}>
+            <Link to="/">
+              <img src="/images/logo.png" />
+            </Link>
+          </div>
+          <h3>Social media App</h3>
         </header>
         <SideNav />
         <main className={styles.main}>{<Outlet />}</main>
@@ -52,7 +62,7 @@ function SideNav() {
           </NavLink>
         </li>
         <li className={styles.nav__list_item}>
-          <NavLink className={styles.nav__list_link} to="/">
+          <NavLink className={styles.nav__list_link} to="/bookmarks">
             <IoBookmarkOutline /> <span>Bookmarks</span>
           </NavLink>
         </li>
@@ -77,6 +87,7 @@ function SideNav() {
 
 function Aside() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { users, isLoading: isFetchingUsers } = useUsers()
   const { follow, isFollowing } = useFollow()
   const { unFollow, isUnFollowing } = useUnFollow()
@@ -91,10 +102,12 @@ function Aside() {
     return following.includes(id) ? "Unfollow" : "Follow"
   }
   const btnOnClick = (id) => {
-    return following.includes(id) ? () => unFollow(id) : () => follow(id)
+    return following.includes(id)
+      ? () => unFollow(id, { onSuccess: () => dispatch(removeFollowing(id)) })
+      : () => follow(id, { onSuccess: () => dispatch(addFollowing(id)) })
   }
 
-  if (isFollowing || isUnFollowing || isFetchingUsers) return "Loading..."
+  if (isFetchingUsers) return <Loader />
   return (
     <aside className={styles.aside}>
       <div className={styles.aside__container}>
@@ -107,7 +120,11 @@ function Aside() {
               onClick={() => handleClick(user._id)}
             >
               {
-                <Button type={btnType(user._id)} onClick={btnOnClick(user._id)}>
+                <Button
+                  type={btnType(user._id)}
+                  onClick={btnOnClick(user._id)}
+                  disabled={isFollowing || isUnFollowing}
+                >
                   {btnText(user._id)}
                 </Button>
               }

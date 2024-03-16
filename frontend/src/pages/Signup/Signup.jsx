@@ -128,7 +128,7 @@ function Signup() {
                 <span className={styles.line}>---------------</span>
                 <p className={styles.signup__text}>
                   Already have an account?{" "}
-                  <Link className={styles.link} to="/signin">
+                  <Link className={styles.link} to="/login">
                     Sign in
                   </Link>
                 </p>

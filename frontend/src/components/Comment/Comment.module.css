@@ -1,12 +1,26 @@
-.user {
-    margin-left: 0;
-    border-bottom: 0;
-}
-
-.user:hover {
-    background-color: transparent;
-}
-
 .comment {
-    border-bottom: 2px solid;
+    border-bottom: 1px solid var(--color-stone-200);
+    padding: .5em;
+}
+
+.comment img {
+    height: 3rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+
+.user {
+    padding: .5em;
+    gap: 1em;
+    justify-content: space-between;
+}
+
+.username {
+    font-weight: 500;
+}
+
+.timeSpan {
+    color: var(--color-stone-500);
+    font-weight: var(--fw-light);
+    font-size: .9rem;
 }

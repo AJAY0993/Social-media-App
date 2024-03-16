@@ -101,6 +101,7 @@ const isAuthenticated = catchAsync(async (req, res, next) => {
     ...decoded,
     profilePic: user.profilePic,
     username: user.username,
+    likedPosts: user.likedPosts,
   };
   next();
 });

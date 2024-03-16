@@ -4,18 +4,18 @@ import Button from "../Button/Button"
 
 function Modal({ children, onClose }) {
   return createPortal(
-    <div>
+    <>
       <div className={styles.modal__wrapper}></div>
+
       <div className={styles.modal}>
-        <div className={styles.button__wrapper}>
-          <Button type="primary" variation="circle" onClick={onClose}>
+        <div className={styles.closeBtn}>
+          <Button type="primary" variation={"circle"} onClick={onClose}>
             X
           </Button>
         </div>
-
-        <section>{children}</section>
+        <section className={styles.modalWindow}>{children}</section>
       </div>
-    </div>,
+    </>,
     document.body
   )
 }

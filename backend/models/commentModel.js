@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
+const creatorSchema = new mongoose.Schema({
+  username: String,
+  profilePic: String,
+});
+
 const Schema = new mongoose.Schema(
   {
     user: {
-      type: String,
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
       required: [true, 'Please provide senderId'],
     },
+    creator: creatorSchema,
     comment: {
       type: String,
       required: [true, 'Please provide a comment'],

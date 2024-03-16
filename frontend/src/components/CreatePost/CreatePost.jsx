@@ -11,7 +11,7 @@ import { getUser } from "../../reducer/userSlice"
 import { extractTags } from "./../../utils/helpers"
 
 import styles from "./CreatePost.module.css"
-import useCreatePost from "../../hooks/useConversations"
+import useCreatePost from "../../hooks/useCreatePost"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 
 function CreatePost() {

@@ -13,7 +13,12 @@ const getPostComments = catchAsync(async (req, res, next) => {
     return next(new AppError(400, 'Please provide post ID'));
   }
 
-  const comments = await Comment.find({ post: req.body.postId });
+  const comments = await Comment.find({ post: req.body.postId }).sort({
+    createdAt: -1,
+  });
+
+  // .populate does not work it throws schema is not registerd error
+
   sendResponse(res, 200, 'comments fetched successfully', { comments });
 });
 
@@ -27,6 +32,10 @@ const createComment = catchAsync(async (req, res, next) => {
     comment: req.body.comment,
     post: req.body.postId,
     user: req.user.id,
+    creator: {
+      username: req.user.username,
+      profilePic: req.user.profilePic,
+    },
   });
 
   sendResponse(res, 201, 'comment created successfully', {

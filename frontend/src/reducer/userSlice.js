@@ -6,7 +6,9 @@ const initialState = {
   following: [],
   followers: [],
   status: "idle",
-  onlineUsers: []
+  onlineUsers: [],
+  bookmarks: [],
+  likedPosts: []
 }
 
 const userSlice = createSlice({
@@ -19,6 +21,7 @@ const userSlice = createSlice({
         (follower) => follower.followerId
       )
       state.following = state.user.following.map((x) => x.followingId)
+      state.bookmarks = [...state.user.bookmarks]
       state.isAuthenticated = true
       state.status = "idle"
     },
@@ -32,6 +35,17 @@ const userSlice = createSlice({
       state.following = state.following.filter(
         (followingId) => followingId !== action.payload
       )
+    },
+    addToBookMarks(state, action) {
+      state.bookmarks = [...state.bookmarks, action.payload]
+    },
+    removeFromBookmarks(state, action) {
+      state.bookmarks = state.bookmarks.filter(
+        (bookmark) => bookmark !== action.payload
+      )
+    },
+    updateLikedPosts(state, action) {
+      state.likedPosts = action.payload
     }
   },
   extraReducers: (builder) => {}
@@ -42,7 +56,16 @@ export const getUser = (state) => state.user.user
 export const getUserId = (state) => state.user.user._id
 export const getOnlineUsers = (state) => state.user.onlineUsers
 export const getFollowing = (state) => state.user.following
+export const getBookmarks = (state) => state.user.bookmarks
+export const getLikedPosts = (state) => state.user.likedPosts
 
-export const { login, setOnlineUsers, addFollowing, removeFollowing } =
-  userSlice.actions
+export const {
+  login,
+  setOnlineUsers,
+  addFollowing,
+  removeFollowing,
+  addToBookMarks,
+  removeFromBookmarks,
+  updateLikedPosts
+} = userSlice.actions
 export default userSlice.reducer

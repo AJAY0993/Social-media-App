@@ -19,3 +19,31 @@ export const createPost = async (post) => {
     throw new Error(error.response.data.message)
   }
 }
+
+export const fetchPostComments = async (postId) => {
+  try {
+    const res = await axios(`posts/${postId}/comments`)
+    const comments = await res.data.data.comments
+    return comments
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}
+
+export const createComment = async ({ postId, comment }) => {
+  try {
+    const res = await axios(`posts/${postId}/comments`, {
+      method: "POST",
+      data: { comment }
+    })
+    const newComment = await res.data.data.comment
+    return newComment
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}
+
+export const likePost = async (postId) => {
+  const res = await axios(`posts/${postId}/like`, { method: "PATCH" })
+  return res.data.data
+}

@@ -43,7 +43,54 @@ export const unFollow = async (userToUnFollow) => {
   }
 }
 
-export async function loader({ userId }) {
-  const res = await axios(`users/${userId}`)
-  return res.data.data.profile
+export const updateProfile = async (data) => {
+  try {
+    const updataion = { ...data }
+
+    updataion.profilePic = data.profilePic[0]
+
+    const formData = new FormData()
+
+    for (let i in data) {
+      formData.append(i, updataion[i])
+    }
+
+    if (typeof data.profilePic === "string") {
+      formData.delete("profilePic")
+    }
+
+    const res = await axios("users/myProfile", {
+      method: "PATCH",
+      data: formData
+    })
+    return res.data.data.profile
+  } catch (err) {
+    throw new Error(err.response.data.message)
+  }
+}
+
+export const fetchBookmarks = async () => {
+  const res = await axios("users/myProfile/bookmarks")
+  return res.data.data.bookmarks
+}
+
+export const addToBookmarks = async (postId) => {
+  try {
+    const res = await axios(`users/myProfile/bookmarks/${postId}`, {
+      method: "PATCH"
+    })
+    return res.data.data.bookmark
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}
+export const removeFromBookmarks = async (postId) => {
+  try {
+    await axios(`users/myProfile/bookmarks/${postId}`, {
+      method: "DELETE"
+    })
+    return postId
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
 }

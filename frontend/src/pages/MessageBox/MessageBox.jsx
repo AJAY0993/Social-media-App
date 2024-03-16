@@ -10,13 +10,23 @@ import styles from "./MessageBox.module.css"
 import useMessages from "../../hooks/useMessages"
 import Loader from "../../components/Loader/Loader"
 import { useSelector } from "react-redux"
-import { getUserId } from "../../reducer/userSlice"
+import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
+import { useParams } from "react-router-dom"
+import Button from "../../components/Button/Button"
 
 function MessageBox() {
-  const { messages: previousMessages, isLoading } = useMessages()
+  const { recieverId } = useParams()
+  const onlineUsers = useSelector(getOnlineUsers) || ""
+  const secdondarCaption = onlineUsers.includes(recieverId)
+    ? "online"
+    : "offilne"
+  const { data, isLoading } = useMessages()
   const [messages, setMessages] = useState([])
   const userId = useSelector(getUserId)
   const back = useBack()
+
+  const previousMessages = data?.previousMessages
+  const reciever = data?.reciever
 
   if (isLoading) return <Loader />
   return (
@@ -30,14 +40,17 @@ function MessageBox() {
         <User
           showBtn={false}
           customClass={styles.user}
-          secondaryCaption="Online"
+          user={reciever}
+          secondaryCaption={secdondarCaption}
         ></User>
       </div>
       <div className={styles.box}>
         <article className={styles.secondaryHeader + " flex"}>
-          <h3>Robert</h3>
+          <h3>{reciever.username}</h3>
           <div className={styles.btn__wrapper}>
-            <button className="btn btn__primary btn--rounded">Profile</button>
+            <Button type="primary" variation="rounded">
+              Profile
+            </Button>
           </div>
         </article>
         <div className={styles.messages__container + " " + "flex"}>

@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux"
 import { login } from "./reducer/userSlice"
 import toast, { Toaster } from "react-hot-toast"
 import Loader from "./components/Loader/Loader"
+import Bookmarks from "./pages/Bookmarks/Bookmarks"
 
 // const router = createBrowserRouter([
 //   {
@@ -135,6 +136,8 @@ function App() {
           />
           <Route path="/" element={<Layout />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/messages" element={<Conversations />} />
             <Route path="/messages/:recieverId" element={<MessageBox />} />
             <Route path="/profile/:userId" element={<Profile />} />

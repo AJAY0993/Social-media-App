@@ -25,10 +25,19 @@ const getProfile = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateMe = catchAsync(async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  sendResponse(res, 200, 'Profile updated successfully', {
+    profile: updatedUser,
+  });
+});
+
 const unFollow = catchAsync(async (req, res, next) => {
   const { unFollowId } = req.params;
 
-  console.log(unFollowId);
   // Ftech the current user
   const p1 = User.findById(req.user.id);
 
@@ -128,11 +137,45 @@ const getFollowing = catchAsync(async (req, res, next) => {
   sendResponse(res, 200, 'followers fetched sucessfully', { following });
 });
 
+const getBookmarks = catchAsync(async (req, res, next) => {
+  const bookmarks = await User.findById(req.user.id)
+    .select('bookmarks')
+    .populate('bookmarks');
+  sendResponse(res, 200, 'Bookmarks fetched successfully', {
+    bookmarks: bookmarks.bookmarks,
+  });
+});
+
+const addToBookmarks = catchAsync(async (req, res, next) => {
+  const { postId } = req.params;
+  const user = await User.findById(req.user.id);
+  if (user.bookmarks.includes(postId)) {
+    return next(new AppError(400, 'Post Already exist'));
+  }
+  user.bookmarks.push(postId);
+  await user.save({ validateBeforeSave: false });
+  sendResponse(res, 200, 'Post bookmarked successfully', {
+    bookmark: postId,
+  });
+});
+
+const removeFromBookmarks = catchAsync(async (req, res, next) => {
+  const { postId } = req.params;
+  const user = await User.findById(req.user.id);
+  user.bookmarks.pull(postId);
+  await user.save({ validateBeforeSave: false });
+  sendResponse(res, 204, 'Post removed from bookmarks successfully');
+});
+
 module.exports = {
   getProfile,
   getAllUsers,
+  updateMe,
   getFollowers,
   getFollowing,
   follow,
   unFollow,
+  getBookmarks,
+  addToBookmarks,
+  removeFromBookmarks,
 };

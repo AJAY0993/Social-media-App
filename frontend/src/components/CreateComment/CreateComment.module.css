@@ -1,0 +1,17 @@
+.form {
+    height: fit-content;
+}
+
+.input {
+    background: transparent;
+    flex-grow: 1;
+    align-self: flex-end;
+    outline: 0;
+    border: 0;
+    padding: .25em .5em;
+    border-bottom: 1px solid var(--clr-main);
+}
+
+.buttonWrapper {
+    width: 20%;
+}

@@ -101,7 +101,7 @@ function Login() {
                 </button>
                 <p className={styles.login__text}>
                   Dont have an account?{" "}
-                  <Link className={styles.link} to="/register">
+                  <Link className={styles.link} to="/signup">
                     Sign up
                   </Link>
                 </p>

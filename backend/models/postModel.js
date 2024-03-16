@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema(
+const creatorSchema = new mongoose.Schema({
+  username: String,
+  profilePic: String,
+});
+
+const postSchema = new mongoose.Schema(
   {
-    userId: {
-      type: String,
-      required: [true, 'A Post must have a userId'],
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'A Post must have a user'],
     },
+    originalCreator: creatorSchema,
     content: {
       type: String,
       required: [true, 'A post must have some content'],
@@ -18,6 +25,7 @@ const schema = new mongoose.Schema(
     imageUrl: {
       type: String,
     },
+    likes: { type: Number, default: 0 },
     videoUrl: {
       type: String,
     },
@@ -29,5 +37,5 @@ const schema = new mongoose.Schema(
   }
 );
 
-const Post = mongoose.model('post', schema);
+const Post = mongoose.model('Post', postSchema);
 module.exports = Post;
