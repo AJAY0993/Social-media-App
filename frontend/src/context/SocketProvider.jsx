@@ -8,7 +8,9 @@ import {
   setOnlineUsers
 } from "../reducer/userSlice"
 const socketContext = createContext()
-const url = "http://localhost:3000"
+const url = import.meta.PRODUCTION
+  ? window.location.origin
+  : "http://localhost:3000"
 
 function SocketProvider({ children }) {
   const [socket, setSocket] = useState(null)
@@ -17,18 +19,15 @@ function SocketProvider({ children }) {
   const user = useSelector(getUser)
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      return console.log("Not logged in")
-    } else {
-      const socket = io(url, {
-        query: { userId: user._id }
-      })
-      socket.on("event:onlineUsers", (onlineUsers) => {
-        dispatch(setOnlineUsers(onlineUsers))
-      })
-      setSocket(socket)
-    }
-  }, [isAuthenticated])
+    const socket = io(url, {
+      query: { userId: user?._id }
+    })
+    socket.on("event:onlineUsers", (onlineUsers) => {
+      dispatch(setOnlineUsers(onlineUsers))
+    })
+    setSocket(socket)
+    return () => socket.disconnect()
+  }, [isAuthenticated, user?._id, dispatch])
 
   return (
     <socketContext.Provider value={{ socket }}>

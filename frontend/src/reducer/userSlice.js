@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { fetchMyProfile } from "../services/userApi"
 
 const initialState = {
   isAuthenticated: false,
@@ -47,8 +48,7 @@ const userSlice = createSlice({
     updateLikedPosts(state, action) {
       state.likedPosts = action.payload
     }
-  },
-  extraReducers: (builder) => {}
+  }
 })
 
 export const getIsAuthenticated = (state) => state.user.isAuthenticated

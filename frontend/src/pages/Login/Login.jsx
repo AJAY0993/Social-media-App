@@ -84,7 +84,9 @@ function Login() {
                 <Link className={styles.link} to="/forgotPassword">
                   Forgot password ?
                 </Link>
-                <Button type="primary">Sign in</Button>
+                <Button type="primary" disabled={isLoggingIn}>
+                  Log in
+                </Button>
               </form>
               <div>
                 <span className={styles.line}>---------------</span>

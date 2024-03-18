@@ -25,10 +25,11 @@ import { useState } from "react"
 import CreatePost from "../CreatePost/CreatePost"
 import Modal from "../Modal/Modal"
 import List from "../List/List"
+import { SocketProvider } from "../../context/SocketProvider.jsx"
 
 function Layout() {
   return (
-    <ProtectRoute>
+    <SocketProvider>
       <div className="container ">
         <header className={`${styles.header} flex a-center j-between`}>
           <div className={`  ${styles.logo}`}>
@@ -42,7 +43,7 @@ function Layout() {
         <main className={styles.main}>{<Outlet />}</main>
         <Aside />
       </div>
-    </ProtectRoute>
+    </SocketProvider>
   )
 }
 

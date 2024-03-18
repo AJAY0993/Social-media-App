@@ -11,9 +11,13 @@ export const fetchProfile = async (userId) => {
 }
 
 export const fetchMyProfile = async () => {
-  const res = await axios(`users/myProfile`)
-  const profile = res.data.data.profile
-  return profile
+  try {
+    const res = await axios(`users/myProfile`)
+    const profile = res.data.data.profile
+    return profile
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
 }
 
 export const fetchUsers = async () => {

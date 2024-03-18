@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import styles from "./Landing.module.css"
-import { getIsAuthenticated } from "./../../reducer/userSlice"
-import { useSelector } from "react-redux"
-import { useEffect } from "react"
+
 function Landing() {
   const navigate = useNavigate()
   const handleClick = () => navigate("/signup")
