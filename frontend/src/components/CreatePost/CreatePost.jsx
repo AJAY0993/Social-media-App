@@ -13,6 +13,7 @@ import { extractTags } from "./../../utils/helpers"
 import styles from "./CreatePost.module.css"
 import useCreatePost from "../../hooks/useCreatePost"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
+import Button from "../Button/Button"
 
 function CreatePost() {
   const user = useSelector(getUser)
@@ -116,12 +117,9 @@ function CreatePost() {
               cb={(emoji) => setValue("content", getValues("content") + emoji)}
             />
             <div className={styles.btn__wrapper}>
-              <button
-                className="btn btn__primary btn--rounded"
-                disabled={isCreating}
-              >
-                <IoIosSend fontSize={"2rem"} />
-              </button>
+              <Button type="primary" variation="rounded" disabled={isCreating}>
+                Post
+              </Button>
             </div>
           </div>
         </div>

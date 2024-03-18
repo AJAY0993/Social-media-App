@@ -49,8 +49,10 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       require: [true, 'Please Provide  a password'],
-      min: [8, 'Password must be 8 characters long'],
-      max: [20, 'Password must not be longer than 8 characters '],
+      validate: {
+        validator: (value) => value.length >= 8 && value.length <= 20,
+        message: 'Password must be 8 caharcter long and less than 20 chracters',
+      },
       select: false,
     },
     confirmPassword: {
@@ -134,13 +136,11 @@ UserSchema.methods.craetePasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  console.log({ resetToken }, this.passwordResetToken);
-
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
 };
 
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

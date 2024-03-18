@@ -6,7 +6,15 @@ const Router = express.Router();
 
 Router.route('/')
   .get(authController.isAuthenticated, converstaionController.getConversations)
-  .post(converstaionController.createConversation);
+  .post(
+    authController.isAuthenticated,
+    converstaionController.createConversation
+  );
+
+Router.route('/my').get(
+  authController.isAuthenticated,
+  converstaionController.getUserConversations
+);
 
 Router.route('/to').get(
   authController.isAuthenticated,

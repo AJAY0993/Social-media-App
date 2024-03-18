@@ -4,8 +4,14 @@ import { RiMessage2Line } from "react-icons/ri"
 import useProfile from "../../hooks/useProfile"
 import { useState } from "react"
 import Modal from "../../components/Modal/Modal"
-import { useSelector } from "react-redux"
-import { getFollowing, getUser, getUserId } from "../../reducer/userSlice"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  addFollowing,
+  getFollowing,
+  getUser,
+  getUserId,
+  removeFollowing
+} from "../../reducer/userSlice"
 import Button from "../../components/Button/Button"
 import { IoPencil } from "react-icons/io5"
 import List from "../../components/List/List"
@@ -17,10 +23,11 @@ import useUnFollow from "./../../hooks/useUnFollow"
 import { useNavigate } from "react-router-dom"
 
 function Profile() {
-  const { profile, isProfileLoading } = useProfile()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { profile, isProfileLoading, error } = useProfile()
   const { follow, isFollowing } = useFollow()
   const { unFollow, isUnFollowing } = useUnFollow()
-  const navigate = useNavigate()
   const userId = useSelector(getUserId)
   const following = useSelector(getFollowing)
   const numFollowers = profile?.followers?.length || 0
@@ -64,7 +71,11 @@ function Profile() {
           type="primary"
           variation="rounded"
           disabled={isFollowing || isUnFollowing}
-          onClick={() => (following.includes(id) ? unFollow(id) : follow(id))}
+          onClick={() =>
+            following.includes(id)
+              ? unFollow(id, dispatch(removeFollowing(id)))
+              : follow(id, dispatch(addFollowing(id)))
+          }
         >
           {following.includes(id) ? "Unfollow" : "Follow"}
         </Button>
@@ -72,6 +83,7 @@ function Profile() {
     )
   }
   if (isProfileLoading) return <Loader />
+  if (error) return <h3>{error.message}</h3>
   return (
     <section className={styles.profile}>
       <div className={styles.profile__container}>

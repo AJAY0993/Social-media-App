@@ -8,11 +8,11 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { app } = require('./configs/socket');
 
+const User = require('./models/userModel');
 const Comment = require('./models/commentModel');
 const Conversation = require('./models/conversationModel');
 const Message = require('./models/messageModel');
 const Post = require('./models/postModel');
-const User = require('./models/userModel');
 
 const userRouter = require('./routes/userRoutes');
 const postRouter = require('./routes/postRoutes');

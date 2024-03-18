@@ -3,19 +3,24 @@ import User from "../../components/User/User"
 import styles from "./Conversations.module.css"
 import { useSelector } from "react-redux"
 import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
-import useUsers from "../../hooks/useUsers"
 import Button from "../../components/Button/Button"
+import useConversations from "../../hooks/useConversations"
+import Loader from "../../components/Loader/Loader"
 
 function Conversations() {
   const onlineUsers = useSelector(getOnlineUsers)
-  const navigate = useNavigate()
   const userId = useSelector(getUserId)
-  const { users, isLoading } = useUsers()
-  const dms = users?.filter((user) => user._id !== userId)
-
+  const navigate = useNavigate()
+  const { conversations, isFetcgingConversations } = useConversations()
+  const dms = conversations?.map(
+    (conversation) =>
+      conversation.participants[0]._id === userId
+        ? conversation.participants[1] // User 1 is me Then i need User 2 to display on screen
+        : conversation.participants[0] // User 1 is not me that i need display  user 1 on screen
+  )
   const secondaryCaption = (id) =>
     onlineUsers.includes(id) ? "Online" : "Offline"
-  if (isLoading) return "Loading..."
+  if (isFetcgingConversations) return <Loader />
   return (
     <section className={styles.messages}>
       <div className="messages__container">

@@ -1,12 +1,12 @@
 .hero {
     width: 100%;
-    gap: 1em;
     justify-content: space-between;
-    padding: 2em;
+    padding: 1em;
 }
 
 .user__image {
-    min-width: 3rem
+    min-width: 3rem;
+    margin-top: 1em;
 }
 
 .form {

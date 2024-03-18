@@ -13,7 +13,7 @@ function Comment({ comment }) {
               {formatDate(comment.createdAt)}
             </span>
           </div>
-          <p className="p1">{comment.comment}</p>
+          <p className="">{comment.comment}</p>
         </div>
       </div>
     </>

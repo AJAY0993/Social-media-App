@@ -4,22 +4,19 @@ import axios from "../utils/axios"
 
 function useMessages() {
   const { recieverId } = useParams()
-  const { data, isLoading } = useQuery({
+  const { data: messages, isFetchingMessages } = useQuery({
     queryFn: async () => {
       try {
         const res = await axios(`conversations/to?reciever=${recieverId}`)
         const conversation = res.data.data
-        return {
-          previousMessages: conversation.messages,
-          reciever: conversation.reciever
-        }
+        return conversation.messages
       } catch (error) {
-        throw new Error(error.response.data.message)
+        return []
       }
     },
     queryKey: [`messages:${recieverId}`]
   })
-  return { data, isLoading }
+  return { messages, isFetchingMessages }
 }
 
 export default useMessages

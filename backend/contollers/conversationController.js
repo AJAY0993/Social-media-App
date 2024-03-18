@@ -28,11 +28,14 @@ const createConversation = catchAsync(async (req, res, next) => {
 
   if (!reciever) return next(new AppError(400, 'Reciever does not exist'));
   const participants = [participant1, participant2];
-  const conversation = await Conversation.create({
+  let conversation = await Conversation.create({
     participants,
     sender: { username: req.user.username, profilePic: req.user.profilePic },
     reciever: { username: reciever.username, profilePic: reciever.profilePic },
   });
+  conversation = conversation.toObject();
+  conversation.messages = [];
+
   return res.status(201).json({
     status: 'success',
     message: 'New conversation created successfully',
@@ -55,8 +58,8 @@ const getConversation = catchAsync(async (req, res, next) => {
 
 const getUserConversations = catchAsync(async (req, res, next) => {
   const conversations = await Conversation.find({
-    sender: req.user.id,
-  }).populate('User');
+    participants: { $all: [req.user.id] },
+  }).populate('participants');
 
   sendResponse(res, 200, 'conversations fetched successfully', {
     conversations,
@@ -69,6 +72,9 @@ const getUserConversation = catchAsync(async (req, res, next) => {
   let conversation = await Conversation.findOne({
     participants: { $all: [req.user.id, reciever] },
   });
+  if (!conversation) {
+    return next(new AppError(400, 'Conversation is not initialized yet'));
+  }
   conversation = conversation.toObject();
   const messages = await Message.find({
     conversation: conversation._id,

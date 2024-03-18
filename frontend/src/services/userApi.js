@@ -1,9 +1,13 @@
 import axios from "../utils/axios"
 
 export const fetchProfile = async (userId) => {
-  const res = await axios(`users/${userId}`)
-  const profile = res.data.data.profile
-  return profile
+  try {
+    const res = await axios(`users/${userId}`)
+    const profile = res.data.data.profile
+    return profile
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
 }
 
 export const fetchMyProfile = async () => {

@@ -11,6 +11,7 @@ const MessageSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Please provide reviever ID'],
   },
+  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   message: {
     type: String,
     required: [true, 'Please provide required a message'],

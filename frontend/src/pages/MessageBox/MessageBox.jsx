@@ -11,44 +11,51 @@ import useMessages from "../../hooks/useMessages"
 import Loader from "../../components/Loader/Loader"
 import { useSelector } from "react-redux"
 import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button/Button"
+import useProfile from "../../hooks/useProfile"
 
 function MessageBox() {
+  const navigate = useNavigate()
   const { recieverId } = useParams()
   const onlineUsers = useSelector(getOnlineUsers) || ""
   const secdondarCaption = onlineUsers.includes(recieverId)
     ? "online"
     : "offilne"
-  const { data, isLoading } = useMessages()
+  const {
+    messages: previousMessages,
+    isFetchingMessages: isFetchingPreviousMessages
+  } = useMessages()
+  const { profile, isProfileLoading } = useProfile()
   const [messages, setMessages] = useState([])
   const userId = useSelector(getUserId)
   const back = useBack()
 
-  const previousMessages = data?.previousMessages
-  const reciever = data?.reciever
-
-  if (isLoading) return <Loader />
+  if (isFetchingPreviousMessages || isProfileLoading) return <Loader />
   return (
     <section className={styles.messageBox}>
       <div className={styles.header}>
         <div className={styles.back__btn_wrapper}>
-          <button className="btn btn__primary btn--square" onClick={back}>
+          <Button type="primary" variation="square" onClick={back}>
             <IoArrowBackSharp />
-          </button>
+          </Button>
         </div>
         <User
           showBtn={false}
           customClass={styles.user}
-          user={reciever}
+          user={profile}
           secondaryCaption={secdondarCaption}
         ></User>
       </div>
       <div className={styles.box}>
         <article className={styles.secondaryHeader + " flex"}>
-          <h3>{reciever.username}</h3>
+          <h3>{profile.username}</h3>
           <div className={styles.btn__wrapper}>
-            <Button type="primary" variation="rounded">
+            <Button
+              type="primary"
+              variation="rounded"
+              onClick={() => navigate(`/profile/${profile._id}`)}
+            >
               Profile
             </Button>
           </div>

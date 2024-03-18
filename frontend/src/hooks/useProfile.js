@@ -3,12 +3,16 @@ import { useParams } from "react-router-dom"
 import { fetchProfile } from "../services/userApi"
 
 function useProfile() {
-  const { userId } = useParams()
-  const { data: profile, isLoading: isProfileLoading } = useQuery({
-    queryFn: () => fetchProfile(userId),
+  const { userId, recieverId } = useParams()
+  const {
+    data: profile,
+    isLoading: isProfileLoading,
+    error
+  } = useQuery({
+    queryFn: () => fetchProfile(userId || recieverId),
     queryKey: [`user:${userId}`]
   })
-  return { profile, isProfileLoading }
+  return { profile, isProfileLoading, error }
 }
 
 export default useProfile

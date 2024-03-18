@@ -5,7 +5,7 @@ import styles from "./CreateComment.module.css"
 
 function CreateComment({ postId, close }) {
   const { createComment, isCreating } = useCreateComment()
-  const { handleSubmit, register } = useForm()
+  const { handleSubmit, register, getValues } = useForm()
 
   const onSubmit = (data) => {
     createComment({ ...data, postId }, { onSuccess: close })
@@ -22,7 +22,10 @@ function CreateComment({ postId, close }) {
           {...register("comment", { required: "Comment must not be empty" })}
         />
         <div className={styles.buttonWrapper}>
-          <Button type="primary" disabled={isCreating}>
+          <Button
+            type="primary"
+            disabled={isCreating || getValues("comment") === ""}
+          >
             Add
           </Button>
         </div>

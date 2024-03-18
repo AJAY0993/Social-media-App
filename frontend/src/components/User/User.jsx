@@ -1,6 +1,7 @@
-import Button from "../Button/Button"
+import { useState } from "react"
 import styles from "./User.module.css"
 import PropTypes from "prop-types"
+import Modal from "../Modal/Modal"
 
 User.propTypes = {
   user: PropTypes.object,
@@ -16,6 +17,8 @@ function User({
   children,
   customClass
 }) {
+  const [showModal, setShowModal] = useState(false)
+  const handleClose = () => setShowModal(false)
   return (
     <>
       <article className={styles.user + " " + customClass}>
@@ -26,8 +29,11 @@ function User({
               user.profilePic ||
               "https://randomuser.me/api/portraits/men/99.jpg"
             }
-            alt="profile-user"
-            border="0"
+            alt="profile-pic"
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowModal(true)
+            }}
           />
           <figcaption>
             <h4>{user.username}</h4>
@@ -36,6 +42,19 @@ function User({
         </figure>
         <div className={styles.btn__wrapper}>{children}</div>
       </article>
+      {showModal && (
+        <Modal onClose={handleClose}>
+          <div>
+            <img
+              src={
+                user.profilePic ||
+                "https://randomuser.me/api/portraits/men/99.jpg"
+              }
+              alt="profile-pic"
+            />
+          </div>
+        </Modal>
+      )}
     </>
   )
 }
