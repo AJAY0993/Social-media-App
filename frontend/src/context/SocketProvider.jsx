@@ -8,9 +8,9 @@ import {
   setOnlineUsers
 } from "../reducer/userSlice"
 const socketContext = createContext()
-const url = import.meta.PRODUCTION
-  ? window.location.origin
-  : "http://localhost:3000"
+const url = import.meta.env.DEV
+  ? "http://localhost:3000/"
+  : window.location.origin
 
 function SocketProvider({ children }) {
   const [socket, setSocket] = useState(null)

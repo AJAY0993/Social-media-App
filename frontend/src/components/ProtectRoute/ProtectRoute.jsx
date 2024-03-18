@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 import Loader from "../Loader/Loader"
-import { getIsAuthenticated, login } from "../../reducer/userSlice"
+import { login } from "../../reducer/userSlice"
 import { useMutation } from "@tanstack/react-query"
 import { fetchMyProfile } from "../../services/userApi"
 import { useEffect, useState } from "react"
@@ -12,7 +12,7 @@ function ProtectRoute({ children }) {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
-  const { mutate, error } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: fetchMyProfile,
     onSuccess: (data) => {
       setLoading(false)
