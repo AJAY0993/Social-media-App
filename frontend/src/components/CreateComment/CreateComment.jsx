@@ -1,6 +1,7 @@
 import useCreateComment from "../../hooks/useCreateComment"
 import { useForm } from "react-hook-form"
 import Button from "../Button/Button"
+import { IoSend } from "react-icons/io5"
 import styles from "./CreateComment.module.css"
 
 function CreateComment({ postId, close }) {
@@ -22,12 +23,9 @@ function CreateComment({ postId, close }) {
           {...register("comment", { required: "Comment must not be empty" })}
         />
         <div className={styles.buttonWrapper}>
-          <Button
-            type="primary"
-            disabled={isCreating || getValues("comment") === ""}
-          >
-            Add
-          </Button>
+          <button disabled={isCreating || getValues("comment") === ""}>
+            <IoSend />
+          </button>
         </div>
       </form>
     </div>

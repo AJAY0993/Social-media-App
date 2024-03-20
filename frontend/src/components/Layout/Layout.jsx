@@ -26,27 +26,35 @@ import CreatePost from "../CreatePost/CreatePost"
 import Modal from "../Modal/Modal"
 import List from "../List/List"
 import { SocketProvider } from "../../context/SocketProvider.jsx"
+import Firebase from "../Firebase/Firebase.jsx"
 
 function Layout() {
   return (
     <SocketProvider>
-      <div className="container ">
-        <header className={`${styles.header} flex a-center j-between`}>
-          <div className={`  ${styles.logo}`}>
-            <Link to="/">
-              <img src="/images/logo.png" />
-            </Link>
-          </div>
-          <h3>Social media App</h3>
-        </header>
-        <SideNav />
-        <main className={styles.main}>{<Outlet />}</main>
-        <Aside />
-      </div>
+      <Firebase>
+        <div className="container ">
+          <Header />
+          <SideNav />
+          <main className={styles.main}>{<Outlet />}</main>
+          <Aside />
+        </div>
+      </Firebase>
     </SocketProvider>
   )
 }
 
+function Header() {
+  return (
+    <header className={`${styles.header} flex a-center j-between`}>
+      <div className={`  ${styles.logo}`}>
+        <Link to="/">
+          <img src="/images/logo.png" />
+        </Link>
+      </div>
+      <h3>Social media App</h3>
+    </header>
+  )
+}
 function SideNav() {
   const userId = useSelector(getUserId)
   return (

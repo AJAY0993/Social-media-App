@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { Toaster } from "react-hot-toast"
+import { lazy, useEffect } from "react"
 import Landing from "./pages/Landing/Landing"
 import Login from "./pages/Login/Login"
 import Signup from "./pages/Signup/Signup"
@@ -11,8 +13,14 @@ import MessageBox from "./pages/MessageBox/MessageBox"
 import Layout from "./components/Layout/Layout"
 import Redirect from "./components/Redirect/Redirect"
 import Bookmarks from "./pages/Bookmarks/Bookmarks"
-import { Toaster } from "react-hot-toast"
 import ProtectRoute from "./components/ProtectRoute/ProtectRoute"
+import ResetPassword from "./pages/ResetPassword/ResetPassword"
+
+// const Home = lazy(() => import("./pages/Home/Home"))
+// const Profile = lazy(() => import("./pages/Profile/Profile"))
+// const Conversations = lazy(() => import("./pages/Conversations/Conversations"))
+// const MessageBox = lazy(() => import("./pages/MessageBox/MessageBox"))
+// const Bookmarks = lazy(() => import("./pages/Bookmarks/Bookmarks"))
 
 function App() {
   const queryClient = new QueryClient()
@@ -50,6 +58,14 @@ function App() {
               element={
                 <Redirect>
                   <ForgotPassword />
+                </Redirect>
+              }
+            />
+            <Route
+              path="/resetPassword/:resetPasswordToken"
+              element={
+                <Redirect>
+                  <ResetPassword />
                 </Redirect>
               }
             />

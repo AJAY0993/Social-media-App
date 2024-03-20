@@ -108,13 +108,14 @@ const isAuthenticated = catchAsync(async (req, res, next) => {
 
 const forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
+
   if (!email) return next(new AppError(400, 'Please provide email'));
 
   const user = await User.findOne({ email });
   if (!user) return next(new AppError(400, 'Invalid email'));
 
   // Send Email
-  const resetToken = user.craetePasswordResetToken();
+  const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
   const resetUrl = `${req.protocol}://${req.get(
     'host'
@@ -124,6 +125,9 @@ const forgotPassword = catchAsync(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       message: 'Password reset link with instructions sent to your email',
+      data: {
+        resetToken,
+      },
     });
   } catch (error) {
     user.passwordResetToken = undefined;
@@ -138,14 +142,18 @@ const resetPassword = catchAsync(async (req, res, next) => {
   const { token } = req.params;
   const { password, confirmPassword } = req.body;
   const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
-  const user = User.findOne({
+  const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpiry: { $gt: Date.now() },
   });
-  if (!user) return next(400, 'Token expired or Invalid token');
+  let c = 0;
+  console.log(++c);
+  if (!user) return next(new AppError(400, 'Token expired or Invalid token'));
+  console.log(++c);
   if (password !== confirmPassword) {
     return next(new AppError(400, 'Passwords do not match'));
   }
+  console.log(++c);
   user.password = password;
   user.confirmPassword = confirmPassword;
   user.passwordResetToken = undefined;

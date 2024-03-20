@@ -55,7 +55,7 @@ export const updateProfile = async (data) => {
   try {
     const updataion = { ...data }
 
-    updataion.profilePic = data.profilePic[0]
+    updataion.profilePic = data.profilePic?.[0]
 
     const formData = new FormData()
 
@@ -71,8 +71,10 @@ export const updateProfile = async (data) => {
       method: "PATCH",
       data: formData
     })
+    console.log(res)
     return res.data.data.profile
   } catch (err) {
+    console.log(err)
     throw new Error(err.response.data.message)
   }
 }

@@ -1,18 +1,15 @@
+import { forwardRef } from "react"
 import styles from "./Message.module.css"
-import PropTypes from "prop-types"
 
-Message.propTypes = {
-  showImg: PropTypes.bool,
-  sent: PropTypes.bool
-}
-
-function Message({ showImg = false, message }) {
+// eslint-disable-next-line react/display-name
+const Message = forwardRef(function ({ showImg = false, message }, ref) {
   const sent = Boolean(message.sent)
   return (
     <div
       className={
         styles.message__container + " " + (sent ? styles.sent : styles.recieved)
       }
+      ref={ref}
     >
       {showImg && (
         <img
@@ -28,6 +25,5 @@ function Message({ showImg = false, message }) {
       </p>
     </div>
   )
-}
-
+})
 export default Message

@@ -4,7 +4,7 @@
 }
 
 .comment img {
-    height: 3rem;
+    height: 2.5rem;
     aspect-ratio: 1/1;
     border-radius: 50%;
 }
@@ -17,10 +17,16 @@
 
 .username {
     font-weight: 500;
+    font-size: .8rem;
+
 }
 
 .timeSpan {
     color: var(--color-stone-500);
     font-weight: var(--fw-light);
+    font-size: .8rem;
+}
+
+.comment__content {
     font-size: .9rem;
 }

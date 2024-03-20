@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import Loader from "../Loader/Loader"
 import { login } from "../../reducer/userSlice"
@@ -8,7 +8,14 @@ import { fetchMyProfile } from "../../services/userApi"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
+const pathMap = {
+  "/forgotPassword": "/forgotPassword",
+  "/resetPassword": "/resetPassword",
+  "/signup": "/signup"
+}
 function ProtectRoute({ children }) {
+  const location = useLocation()
+  const path = location.pathname
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
@@ -20,7 +27,13 @@ function ProtectRoute({ children }) {
     },
     onError: (err) => {
       toast.error(err.message)
-      navigate("/login")
+      navigate(
+        pathMap[path]
+          ? path
+          : path.startsWith("/resetPassword")
+          ? navigate(path)
+          : "/login"
+      )
       setLoading(false)
     }
   })

@@ -16,7 +16,8 @@
 .avatar {
     max-height: 85px;
     aspect-ratio: 1/1;
-
+    object-fit: cover;
+    object-position: top;
     border: 2px solid var(--clr-main);
     border-radius: 50%;
     overflow: hidden;

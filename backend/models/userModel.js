@@ -126,7 +126,7 @@ UserSchema.methods.passwordChangedRecently = function (tokenTimeStamp) {
   return false;
 };
 
-UserSchema.methods.craetePasswordResetToken = function () {
+UserSchema.methods.createPasswordResetToken = function () {
   // Generate resetToken
   const resetToken = crypto.randomBytes(32).toString('hex');
 
@@ -136,7 +136,7 @@ UserSchema.methods.craetePasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  this.passwordResetExpiry = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
 };

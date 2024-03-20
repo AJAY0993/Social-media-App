@@ -1,5 +1,8 @@
 .form {
     height: fit-content;
+    position: relative;
+    min-width: 18rem;
+    margin: 0 auto;
 }
 
 .input {
@@ -13,5 +16,17 @@
 }
 
 .buttonWrapper {
-    width: 20%;
+
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.buttonWrapper button {
+    color: var(--clr-main);
+    background-color: transparent;
+    outline: 0;
+    font-size: 1.5rem;
+    border: 0;
 }

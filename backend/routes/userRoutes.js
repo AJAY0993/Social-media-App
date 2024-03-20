@@ -10,6 +10,8 @@ Router.use('/my/conversations', conversationRouter);
 Router.route('/signup').post(authController.signUp);
 Router.route('/login').post(authController.login);
 Router.route('/forgotPassword').post(authController.forgotPassword);
+Router.route('/resetPassword/:token').post(authController.resetPassword);
+
 Router.route('/myProfile')
   .get(
     authController.isAuthenticated,

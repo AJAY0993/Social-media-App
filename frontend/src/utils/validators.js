@@ -15,6 +15,20 @@ const validators = {
       value: 20,
       message: "Username should not be longer than 20 characters"
     }
+  },
+  password: {
+    required: "Please provide your password",
+    minLength: {
+      value: 8,
+      message: "Password must be 8 characters long"
+    },
+    maxLength: {
+      value: 20,
+      message: "Password should not be longer than 20 characters"
+    }
+  },
+  confirmPassword: {
+    required: "Please confirm your password"
   }
 }
 

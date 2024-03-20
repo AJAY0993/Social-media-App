@@ -1,5 +1,16 @@
-import styles from "./ForgotPassword.module.css";
+import { useForm } from "react-hook-form"
+import styles from "./ForgotPassword.module.css"
+import validators from "./../../utils/validators"
+import useForgotPassword from "../../hooks/useForgotPassword"
+import Button from "../../components/Button/Button"
+import { FaSpinner } from "react-icons/fa6"
+
 function ForgotPassword() {
+  const { register, handleSubmit } = useForm()
+  const { forgotPassword, isPending } = useForgotPassword()
+  const onSubmit = (data) => {
+    forgotPassword(data.email)
+  }
   return (
     <section className="container">
       <div className="container">
@@ -7,7 +18,6 @@ function ForgotPassword() {
           <button
             className={"btn btn__primary btn--square " + styles["btn--back"]}
           >
-            {" "}
             <img src="/images/icons/back.png" />
           </button>
           <div className={styles.forgotPassword__container}>
@@ -27,22 +37,26 @@ function ForgotPassword() {
                 No problem! an email with instructions to reset your password
                 will be send to your email
               </p>
-              <form className="forgotPassword__form">
+              <form
+                className="forgotPassword__form"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <input
                   type="email"
                   className="inp inp__secondary"
                   placeholder="Enter your email"
-                  name="email"
-                  required
+                  {...register("email", validators.email)}
                 />
-                <button className="btn btn__primary">Send</button>
+                <Button type="primary" disabled={isPending}>
+                  {isPending ? <FaSpinner /> : "Send"}
+                </Button>
               </form>
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default ForgotPassword;
+export default ForgotPassword

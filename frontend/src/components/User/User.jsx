@@ -2,27 +2,28 @@ import { useState } from "react"
 import styles from "./User.module.css"
 import PropTypes from "prop-types"
 import Modal from "../Modal/Modal"
+import { useNavigate } from "react-router-dom"
 
 User.propTypes = {
   user: PropTypes.object,
   secondaryCaption: PropTypes.string,
-  onClick: PropTypes.func,
   customClass: PropTypes.string
 }
 
 function User({
   user = { username: "username", email: "Email" },
   secondaryCaption = "@rdj",
-  onClick,
   children,
   customClass
 }) {
   const [showModal, setShowModal] = useState(false)
+  const navigate = useNavigate()
   const handleClose = () => setShowModal(false)
+  const handleClick = () => navigate(user._id)
   return (
     <>
       <article className={styles.user + " " + customClass}>
-        <figure className={styles.figure} onClick={onClick}>
+        <figure className={styles.figure} onClick={handleClick}>
           <img
             className="btn--circle"
             src={

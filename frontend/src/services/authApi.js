@@ -28,3 +28,34 @@ export async function signUp(data) {
     throw new Error(error.response.data.message)
   }
 }
+
+export const forgotPassword = async (email) => {
+  try {
+    const res = await axios("/users/forgotPassword", {
+      method: "POST",
+      data: {
+        email
+      }
+    })
+    const message = res.data.message
+    return message
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}
+
+export const resetPassword = async (data) => {
+  try {
+    const res = await axios(`users/resetPassword/${data.resetPasswordToken}`, {
+      method: "POST",
+      data: {
+        password: data.password,
+        confirmPassword: data.confirmPassword
+      }
+    })
+    const user = res.data.data.user
+    return user
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}

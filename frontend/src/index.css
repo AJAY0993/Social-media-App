@@ -82,6 +82,10 @@ li {
   position: relative;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .flex {
   display: flex;
 }

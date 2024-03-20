@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { app } = require('./configs/socket');
+const sendNotification = require('./services/firebase');
 
 const User = require('./models/userModel');
 const Comment = require('./models/commentModel');
