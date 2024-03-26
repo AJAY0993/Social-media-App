@@ -1,18 +1,21 @@
 import { useEffect, useRef, useState } from "react"
-import { useSocket } from "../../context/SocketProvider"
+import { useNavigate, useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
+
+import { IoArrowBackSharp, IoSendSharp } from "react-icons/io5"
+
 import User from "../../components/User/User"
 import Message from "./../../components/Message/Message"
-import { IoArrowBackSharp } from "react-icons/io5"
 import useBack from "./../../hooks/useBack"
 import useSendMessage from "../../hooks/useSendMessage"
 import styles from "./MessageBox.module.css"
 import useMessages from "../../hooks/useMessages"
 import Loader from "../../components/Loader/Loader"
-import { useSelector } from "react-redux"
-import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
-import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button/Button"
+
 import useProfile from "../../hooks/useProfile"
+import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
+import { useSocket } from "../../context/SocketProvider"
 
 function MessageBox() {
   const lastMessageRef = useRef()
@@ -33,7 +36,7 @@ function MessageBox() {
 
   useEffect(() => {
     setTimeout(
-      () => lastMessageRef.current?.scrollIntoView({ behaviour: "smooth" }),
+      () => lastMessageRef.current?.scrollIntoView({ behavior: "smooth" }),
       500
     )
   }, [messages])
@@ -68,7 +71,7 @@ function MessageBox() {
           </div>
         </article>
         <div className={styles.messages__container + " " + "flex"}>
-          {previousMessages?.map((message, i) => (
+          {previousMessages?.map((message) => (
             <Message
               key={Math.random()}
               ref={lastMessageRef}
@@ -93,9 +96,8 @@ function MessageBox() {
 
 function SendMessageForm({ setMessages }) {
   const [message, setMessage] = useState("")
-  const { sendMessage, isSending } = useSendMessage()
+  const { sendMessage } = useSendMessage()
   const { socket } = useSocket()
-  const messageRecievedAudio = new Audio("/audio/notif.mp3")
   const messageSentAudio = new Audio("/audio/sent.mp3")
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -106,11 +108,13 @@ function SendMessageForm({ setMessages }) {
   }
 
   useEffect(() => {
+    const messageRecievedAudio = new Audio("/audio/notif.mp3")
     socket.on("event:message", (message) => {
       setMessages((messages) => [...messages, message])
       messageRecievedAudio.play()
     })
-  }, [])
+    return () => socket.off("event:message")
+  }, [setMessages, socket])
 
   return (
     <footer className={styles.form__container}>
@@ -121,9 +125,9 @@ function SendMessageForm({ setMessages }) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button className="btn btn__primary btn--rounded" disabled={isSending}>
-          {isSending ? "Sending" : "send"}
-        </button>
+        <Button type="primary" variation="rounded" width="fit">
+          <IoSendSharp />
+        </Button>
       </form>
     </footer>
   )

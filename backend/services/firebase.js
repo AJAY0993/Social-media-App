@@ -1,6 +1,7 @@
 /* eslint-disable no-return-await */
 /* eslint-disable arrow-body-style */
 const admin = require('../configs/fireBase');
+const userToFirebaseTokenMap = {};
 
 const sendNotificationToAllUsers = async (tokens, message) => {
   try {
@@ -23,4 +24,13 @@ const sendNotificationToAllUsers = async (tokens, message) => {
     console.log(err);
   }
 };
-module.exports = sendNotificationToAllUsers;
+
+const addToken = (userId, token) => {
+  userToFirebaseTokenMap[userId] = token;
+};
+
+module.exports = {
+  sendNotificationToAllUsers,
+  userToFirebaseTokenMap,
+  addToken,
+};

@@ -63,6 +63,10 @@ const globalErrorHandler = (error, req, res, next) => {
       err = handleInvalidObjectId();
     }
 
+    if (error.name === 'CastError') {
+      err = handleInvalidObjectId();
+    }
+
     if (error.name === 'TokenExpiredError') {
       err = jwtExpiryError();
     }

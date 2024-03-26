@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: 0;
+}
+
 :root {
   --clr-main: #28CD56;
   --clr-main-light: #4be877;
@@ -52,6 +56,13 @@ img {
   margin: 0;
 }
 
+input,
+button {
+  border: 0;
+  background: transparent;
+  outline: 0;
+}
+
 .icon__img {
   max-height: 35px;
   width: 35px;
@@ -82,8 +93,20 @@ li {
   position: relative;
 }
 
+.sm {
+  font-size: .9rem;
+}
+
 .text-center {
   text-align: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
 }
 
 .flex {
@@ -120,6 +143,11 @@ li {
 
 .p2 {
   padding: 2em;
+}
+
+.px-1 {
+  padding-right: 1em;
+  padding-left: 1em;
 }
 
 .my-1 {

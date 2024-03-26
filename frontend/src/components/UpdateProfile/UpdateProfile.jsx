@@ -27,7 +27,7 @@ function UpdateProfile({ close }) {
   }
 
   return (
-    <div className="m-auto">
+    <div>
       <div className={styles.profilePic}>
         <img />
       </div>

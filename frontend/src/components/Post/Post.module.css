@@ -16,7 +16,6 @@
     border-bottom: 0 !important;
 }
 
-.user__wrapper {}
 
 .post__container {
     max-width: 100%;
@@ -24,13 +23,11 @@
 
 }
 
-.post__img {
+.postImg {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    padding: 1em;
     display: block;
-    border-radius: 2em;
     overflow: hidden;
 }
 
@@ -47,13 +44,19 @@
     font-size: 1.3rem;
 }
 
-.controller {}
 
 .controller>* {
     cursor: pointer;
 }
 
-.post__text {
+.postText {
     padding: 1em;
     color: var(--clr-text-color1);
+}
+
+@media (min-width:750px) {
+    .postImg {
+        padding: 1em;
+        border-radius: 2em;
+    }
 }

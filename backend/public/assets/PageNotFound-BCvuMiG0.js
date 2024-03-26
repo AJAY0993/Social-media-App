@@ -1,0 +1,1 @@
+import{u as t,j as e,B as a}from"./index-BOkKEmcp.js";function s(){const o=t();return e.jsxs("div",{className:"flex col a-center j-center p1",children:[e.jsx("img",{src:"images/undraw_page_not_found_re_e9o6.svg",alt:"404"}),e.jsx(a,{type:"primary",onClick:()=>o("/home"),children:"Back to home"})]})}export{s as default};

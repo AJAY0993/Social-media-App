@@ -7,13 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { app } = require('./configs/socket');
-const sendNotification = require('./services/firebase');
-
-const User = require('./models/userModel');
-const Comment = require('./models/commentModel');
-const Conversation = require('./models/conversationModel');
-const Message = require('./models/messageModel');
-const Post = require('./models/postModel');
+const commentsNotification = require('./services/commentsNotification');
 
 const userRouter = require('./routes/userRoutes');
 const postRouter = require('./routes/postRoutes');
@@ -25,6 +19,7 @@ const globalErrorHandler = require('./contollers/errorController');
 const AppError = require('./utils/appError');
 
 dotenv.config();
+commentsNotification();
 
 // Middlewares
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
@@ -35,9 +30,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-}
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
@@ -47,7 +40,7 @@ app.use('/api/comments', commentRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+    res.sendFile(path.join(__dirname, '/public/index.html'));
   });
 }
 

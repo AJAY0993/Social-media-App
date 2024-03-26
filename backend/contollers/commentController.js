@@ -2,6 +2,7 @@ const Comment = require('../models/commentModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
+const { deleteOne } = require('./factory');
 
 const addPostId = (req) => {
   if (req.params.postId) req.body.postId = req.params.postId;
@@ -16,8 +17,6 @@ const getPostComments = catchAsync(async (req, res, next) => {
   const comments = await Comment.find({ post: req.body.postId }).sort({
     createdAt: -1,
   });
-
-  // .populate does not work it throws schema is not registerd error
 
   sendResponse(res, 200, 'comments fetched successfully', { comments });
 });
@@ -43,9 +42,6 @@ const createComment = catchAsync(async (req, res, next) => {
   });
 });
 
-const deleteComment = catchAsync(async (req, res, next) => {
-  await Comment.findByIdAndDelete(req.params.commentId);
-  sendResponse(res, 204, 'comment deleted successfully');
-});
+const deleteComment = deleteOne(Comment, true);
 
 module.exports = { createComment, getPostComments, deleteComment };

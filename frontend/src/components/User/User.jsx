@@ -19,11 +19,11 @@ function User({
   const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
   const handleClose = () => setShowModal(false)
-  const handleClick = () => navigate(user._id)
+  const handleClick = () => navigate(`/profile/${user._id}`)
   return (
     <>
       <article className={styles.user + " " + customClass}>
-        <figure className={styles.figure} onClick={handleClick}>
+        <figure className={styles.user__figure} onClick={handleClick}>
           <img
             className="btn--circle"
             src={
@@ -36,16 +36,16 @@ function User({
               setShowModal(true)
             }}
           />
-          <figcaption>
+          <figcaption className={styles.user__caption}>
             <h4>{user.username}</h4>
             <span>{secondaryCaption}</span>
           </figcaption>
         </figure>
-        <div className={styles.btn__wrapper}>{children}</div>
+        <>{children}</>
       </article>
       {showModal && (
         <Modal onClose={handleClose}>
-          <div>
+          <div className={styles["user__profilePic--large"]}>
             <img
               src={
                 user.profilePic ||

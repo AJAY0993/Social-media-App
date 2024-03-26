@@ -6,14 +6,13 @@ import EmojiPicker from "emoji-picker-react"
 
 import { BiImageAdd } from "react-icons/bi"
 import { GoSmiley } from "react-icons/go"
-import { IoIosSend } from "react-icons/io"
 import { getUser } from "../../reducer/userSlice"
 import { extractTags } from "./../../utils/helpers"
 
-import styles from "./CreatePost.module.css"
 import useCreatePost from "../../hooks/useCreatePost"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import Button from "../Button/Button"
+import styles from "./CreatePost.module.css"
 
 function CreatePost() {
   const user = useSelector(getUser)
@@ -44,11 +43,11 @@ function CreatePost() {
     )
   }
   return (
-    <section className={styles.hero + " flex"}>
-      <div className={styles.user__image}>
+    <section className="flex j-center p1">
+      <div className={styles.userImg}>
         <img
           className="btn--circle"
-          src={user?.profilePic || "https://i.ibb.co/mBXRT6g/profile-user.png"}
+          src={user?.profilePic}
           alt="profile-user"
           border="0"
         />
@@ -60,17 +59,13 @@ function CreatePost() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className={styles.form__container + " flex col"}>
-          <div className={styles.img__preview}>
+          <div className={styles.imgPreview}>
             {selectedImage?.[0] && (
-              <img
-                className={styles.img__preview}
-                src={URL.createObjectURL(selectedImage[0])}
-              />
+              <img src={URL.createObjectURL(selectedImage[0])} />
             )}
           </div>
-          <div className={styles.text__caption}>
+          <div className={styles.postCaption}>
             <input
-              className="inp "
               placeholder="Caption"
               {...register("caption", { required: "A post have a caption" })}
             />
@@ -78,7 +73,7 @@ function CreatePost() {
               <ErrorMessage message={errors.caption.message} />
             )}
           </div>
-          <div className={styles.text__content}>
+          <div className={styles.postBody}>
             <textarea
               type="text"
               name="content"
@@ -97,17 +92,19 @@ function CreatePost() {
           </div>
 
           <div className={`${styles.footer} flex j-between a-center`}>
-            <div className={styles.file}>
+            <div>
               <label
-                htmlFor={styles.file__input}
-                id={styles.label__file__input}
+                className="flex col a-center"
+                htmlFor={styles.fileInput}
+                id={styles.labelFileInput}
               >
                 <BiImageAdd fontSize={"1.8rem"} />{" "}
               </label>
               <input
+                className={styles.fileInput}
                 type="file"
                 name="image"
-                id={styles.file__input}
+                id={styles.fileInput}
                 accept=".jpg, .png, .jpeg"
                 multiple={false}
                 {...register("image")}
@@ -116,12 +113,15 @@ function CreatePost() {
             <MyEmojiPicker
               cb={(emoji) => setValue("content", getValues("content") + emoji)}
             />
-            <div className={styles.btn__wrapper}>
-              <Button type="primary" variation="rounded" disabled={isCreating}>
-                Post
-              </Button>
-            </div>
           </div>
+          <Button
+            type="primary"
+            variation="rounded"
+            disabled={isCreating}
+            width="full"
+          >
+            Post
+          </Button>
         </div>
       </form>
     </section>
@@ -139,13 +139,13 @@ function MyEmojiPicker({ cb }) {
   }
 
   return (
-    <div className={styles.emojiPicker__wrapper}>
+    <div className={styles.emojiPickerWrapper}>
       <GoSmiley
         fontSize="1.5rem"
         cursor="pointer"
         onClick={toggleEmojiPicker}
       />
-      <div className={styles.emojiPicker__container}>
+      <div className={styles.emojiPickerContainer}>
         <EmojiPicker open={emojiPicker} onEmojiClick={handleEmojiClick} />
       </div>
     </div>

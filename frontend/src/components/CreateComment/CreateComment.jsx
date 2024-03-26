@@ -15,7 +15,7 @@ function CreateComment({ postId, close }) {
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`${styles.form}  flex row`}
+        className={`${styles.form}  flex row p1`}
       >
         <input
           className={`${styles.input}`}

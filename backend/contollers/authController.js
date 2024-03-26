@@ -146,14 +146,13 @@ const resetPassword = catchAsync(async (req, res, next) => {
     passwordResetToken: hashedToken,
     passwordResetExpiry: { $gt: Date.now() },
   });
-  let c = 0;
-  console.log(++c);
+
   if (!user) return next(new AppError(400, 'Token expired or Invalid token'));
-  console.log(++c);
+
   if (password !== confirmPassword) {
     return next(new AppError(400, 'Passwords do not match'));
   }
-  console.log(++c);
+
   user.password = password;
   user.confirmPassword = confirmPassword;
   user.passwordResetToken = undefined;

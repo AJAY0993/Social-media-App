@@ -4,20 +4,17 @@ const postController = require('../contollers/postController');
 const authController = require('../contollers/authController');
 const upload = require('../middlewares/multer');
 
+Router.use(authController.isAuthenticated);
+
 Router.route('/')
   .get(postController.getAllPosts)
-  .post(
-    authController.isAuthenticated,
-    upload.single('image'),
-    postController.createPost
-  );
+  .post(upload.single('image'), postController.createPost);
 
-Router.route('/:postId').get(postController.getPost);
+Router.route('/:id')
+  .get(postController.getPost)
+  .delete(postController.deletePost);
 
-Router.route('/:postId/like').patch(
-  authController.isAuthenticated,
-  postController.likePost
-);
+Router.route('/:postId/like').patch(postController.likePost);
 
 Router.use('/:postId/comments', commentRouter);
 

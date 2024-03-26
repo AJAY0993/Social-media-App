@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
+import { Link, NavLink, Outlet } from "react-router-dom"
 import User from "../User/User"
 import styles from "./Layout.module.css"
 import {
@@ -9,7 +9,6 @@ import {
 import { LuMessagesSquare } from "react-icons/lu"
 import { FaRegCircleUser } from "react-icons/fa6"
 import Loader from "../Loader/Loader"
-import ProtectRoute from "../ProtectRoute/ProtectRoute"
 import { useDispatch, useSelector } from "react-redux"
 import {
   addFollowing,
@@ -66,7 +65,7 @@ function SideNav() {
           </NavLink>
         </li>
         <li className={styles.nav__list_item}>
-          <NavLink className={styles.nav__list_link} to="/">
+          <NavLink className={styles.nav__list_link} to="/explore">
             <IoSearchOutline /> <span>Explore</span>
           </NavLink>
         </li>
@@ -95,14 +94,11 @@ function SideNav() {
 }
 
 function Aside() {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { users, isLoading: isFetchingUsers } = useUsers()
   const { follow, isFollowing } = useFollow()
   const { unFollow, isUnFollowing } = useUnFollow()
   const following = useSelector(getFollowing)
-
-  const handleClick = (userId) => navigate(`/profile/${userId}`)
 
   const btnType = (id) => {
     return following.includes(id) ? "secondary" : "primary"
@@ -123,15 +119,12 @@ function Aside() {
         <List
           items={users}
           render={(user) => (
-            <User
-              key={user._id}
-              user={user}
-              onClick={() => handleClick(user._id)}
-            >
+            <User key={user._id} user={user}>
               {
                 <Button
                   type={btnType(user._id)}
                   onClick={btnOnClick(user._id)}
+                  width={"normal"}
                   disabled={isFollowing || isUnFollowing}
                 >
                   {btnText(user._id)}
@@ -153,7 +146,6 @@ function AddPost() {
   return (
     <>
       <Button
-        className={"btn  " + styles.btn}
         variation="rounded"
         type="primary"
         onClick={() => setIsModalOpen((s) => !s)}

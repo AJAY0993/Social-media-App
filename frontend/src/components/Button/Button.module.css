@@ -21,7 +21,17 @@
     transition: all .2s ease-in;
 }
 
+.fit {
+    width: fit-content;
+}
 
+.normal {
+    width: 7rem
+}
+
+.full {
+    width: 100%;
+}
 
 .primary {
     background-color: var(--clr-main);

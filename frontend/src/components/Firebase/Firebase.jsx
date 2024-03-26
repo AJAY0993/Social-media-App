@@ -1,7 +1,7 @@
 import { onMessage } from "firebase/messaging"
 import { useEffect } from "react"
 import { getToken } from "firebase/messaging"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getIsAuthenticated } from "./../../reducer/userSlice"
 import { messaging } from "../../services/firebase"
 import { toast } from "react-hot-toast"
@@ -38,11 +38,13 @@ function Firebase({ children }) {
   }
 
   useEffect(() => {
+    const audio = new Audio("/audio/notif.mp3")
     requestPermission()
     const unsubscribe = onMessage(messaging, (payload) => {
+      console.log(payload.data)
       if (
         payload.data.type === "newMessage" &&
-        payload.data.senderId !== recieverId
+        payload.data.sender !== recieverId
       ) {
         toast.success(payload.data.title + ": " + payload.data.body, {
           icon: "💬"
@@ -50,6 +52,7 @@ function Firebase({ children }) {
       } else {
         toast.success(payload.data.body, { icon: "📬" })
       }
+      audio.play()
     })
     return unsubscribe
   }, [])

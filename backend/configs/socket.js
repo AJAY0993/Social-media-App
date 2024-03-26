@@ -22,7 +22,6 @@ io.on('connection', (socket) => {
   userIdToSocketIdMap[userId] = socketId;
 
   io.emit('event:onlineUsers', Object.values(socketIdToUserIdMap));
-  console.log(Object.values(socketIdToUserIdMap));
 
   socket.on('event:message', ({ message, recieverId, createdBy }) => {
     socket.to(userIdToSocketIdMap[recieverId]).emit('event:message', {

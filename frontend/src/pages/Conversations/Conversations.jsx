@@ -1,16 +1,23 @@
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  clearMessageCount,
+  getMessageCounts,
+  getOnlineUsers,
+  getUserId
+} from "../../reducer/userSlice"
 import User from "../../components/User/User"
-import styles from "./Conversations.module.css"
-import { useSelector } from "react-redux"
-import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
 import Button from "../../components/Button/Button"
 import useConversations from "../../hooks/useConversations"
 import Loader from "../../components/Loader/Loader"
+import styles from "./Conversations.module.css"
 
 function Conversations() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onlineUsers = useSelector(getOnlineUsers)
   const userId = useSelector(getUserId)
-  const navigate = useNavigate()
+  const messageCounts = useSelector(getMessageCounts)
   const { conversations, isFetcgingConversations } = useConversations()
   const dms = conversations?.map(
     (conversation) =>
@@ -20,6 +27,12 @@ function Conversations() {
   )
   const secondaryCaption = (id) =>
     onlineUsers.includes(id) ? "Online" : "Offline"
+
+  const handleClick = (id) => {
+    navigate(id)
+    dispatch(clearMessageCount(id))
+  }
+
   if (isFetcgingConversations) return <Loader />
   return (
     <section className={styles.messages}>
@@ -34,9 +47,13 @@ function Conversations() {
             <Button
               type="primary"
               variation="rounded"
-              onClick={() => navigate(user._id)}
+              width="fit"
+              onClick={() => handleClick(user._id)}
             >
               Message
+              {messageCounts[user._id] > 0 && (
+                <span>{messageCounts[user._id]}</span>
+              )}
             </Button>
           </User>
         ))}

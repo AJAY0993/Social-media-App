@@ -6,6 +6,6 @@ Router.route('/')
   .get(commentController.getPostComments)
   .post(authController.isAuthenticated, commentController.createComment);
 
-Router.route('/:commentId').delete(commentController.deleteComment);
+Router.route('/:id').delete(commentController.deleteComment);
 
 module.exports = Router;

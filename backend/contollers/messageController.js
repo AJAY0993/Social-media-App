@@ -4,7 +4,9 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const { io, userIdToSocketIdMap } = require('../configs/socket');
 const catchAsync = require('../utils/catchAsync');
-const sendNotification = require('../services/firebase');
+const {
+  sendNotificationToAllUsers: sendNotification,
+} = require('../services/firebase');
 
 const getAllMessage = catchAsync(async (req, res, next) =>
   next(new AppError(404, 'This route is not implemented yet'))
@@ -14,6 +16,10 @@ const createMessage = catchAsync(async (req, res, next) => {
   const senderId = req.user.id;
   const { recieverId } = req.body;
 
+  if (senderId === recieverId) {
+    // eslint-disable-next-line quotes
+    return next(new AppError(400, "You can't send message to self"));
+  }
   let conversation = await Conversation.findOne({
     participants: { $all: [senderId, recieverId] },
   }).select('_id');
@@ -41,7 +47,7 @@ const createMessage = catchAsync(async (req, res, next) => {
 
   const notification = {
     title: `${req.user.username} sends a new message`,
-    body: message.message,
+    body: { sender: recieverId, message: message.message },
     type: 'newMessage',
   };
 

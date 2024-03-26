@@ -1,19 +1,12 @@
-.hero {
-    width: 100%;
-    justify-content: space-between;
-    padding: 1em;
-}
-
-.user__image {
+.userImg {
     min-width: 3rem;
-    margin-top: 1em;
 }
 
 .form {
     flex-grow: 1;
 }
 
-.img__preview {
+.imgPreview {
     border-radius: .5em;
     max-width: 95%;
 }
@@ -22,14 +15,20 @@
     flex-grow: 1;
 }
 
-.text__content textarea,
-.text__caption input {
+.postBody textarea,
+.postCaption input {
     display: block;
     width: 100%;
-    font-size: 1.4rem;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: .1em;
     padding: 1em;
-    border: 1px solid var(--clr-text-color2);
+    align-self: flex-start;
+    border: 0;
     border-radius: 1em;
+    background: transparent;
+    margin: 0;
 }
 
 .text__content textarea:focus {
@@ -37,40 +36,32 @@
     outline: 0;
 }
 
-.text__content textarea::placeholder,
-.text__caption input::placeholder {
-    font-size: inherit;
-    letter-spacing: 2px;
-}
-
-
-#label__file__input {
-    font-size: 2rem;
+#labelFileInput {
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
-#file__input {
+.fileInput {
     display: none;
 }
 
-.emojiPicker__wrapper {
+.emojiPickerWrapper {
     margin-right: auto;
     margin-left: 1em;
     position: relative;
 }
 
-.emojiPicker__container {
+.emojiPickerContainer {
     position: absolute;
     top: 2em;
 }
 
-.btn__wrapper {
-    width: 100px;
-}
+
 
 @media (max-width:750px) {
-    .hero {
-        padding: 1em;
+
+    .userImg {
+        width: 2rem;
     }
 
     .text__input textarea {
@@ -79,9 +70,6 @@
         min-height: 6rem;
     }
 
-    .btn__wrapper {
-        width: 4rem;
-    }
 
     .btn {
         padding: .25em .5em;

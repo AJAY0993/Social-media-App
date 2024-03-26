@@ -5,6 +5,7 @@ const cloudinary = require('../configs/cloudinary');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
 const sendResponse = require('../utils/sendResponse');
+const { deleteOne } = require('./factory');
 
 const getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await Post.find().sort({ createdAt: -1 });
@@ -52,7 +53,7 @@ const createPost = catchAsync(async (req, res, next) => {
 });
 
 const getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.postId);
+  const post = await Post.findById(req.params.id);
   if (post) {
     post.comments = await Comment.find({ postId: post._id });
   }
@@ -100,4 +101,7 @@ const likePost = catchAsync(async (req, res, next) => {
     });
   }
 });
-module.exports = { getAllPosts, getPost, createPost, likePost };
+
+const deletePost = deleteOne(Post, true);
+
+module.exports = { getAllPosts, getPost, createPost, likePost, deletePost };

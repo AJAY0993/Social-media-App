@@ -1,0 +1,1 @@
+import{g as i,h as u,a7 as n}from"./index-BOkKEmcp.js";function f(){const{userId:e,recieverId:r}=i(),{data:s,isLoading:o,error:a}=u({queryFn:()=>n(e||r),queryKey:[`user:${e}`]});return{profile:s,isProfileLoading:o,error:a}}export{f as u};

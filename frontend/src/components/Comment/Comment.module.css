@@ -1,6 +1,8 @@
 .comment {
     border-bottom: 1px solid var(--color-stone-200);
-    padding: .5em;
+    padding: .5em 0;
+    width: 18rem;
+    max-width: 100%;
 }
 
 .comment img {
@@ -9,7 +11,7 @@
     border-radius: 50%;
 }
 
-.user {
+.commentHeader {
     padding: .5em;
     gap: 1em;
     justify-content: space-between;
@@ -27,6 +29,7 @@
     font-size: .8rem;
 }
 
-.comment__content {
+.commentBody {
     font-size: .9rem;
+    font-weight: 500;
 }

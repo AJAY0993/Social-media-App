@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { fetchMyProfile } from "../services/userApi"
+import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   isAuthenticated: false,
@@ -9,7 +8,8 @@ const initialState = {
   status: "idle",
   onlineUsers: [],
   bookmarks: [],
-  likedPosts: []
+  likedPosts: [],
+  messages: {}
 }
 
 const userSlice = createSlice({
@@ -47,6 +47,12 @@ const userSlice = createSlice({
     },
     updateLikedPosts(state, action) {
       state.likedPosts = action.payload
+    },
+    incrementMessageCount(state, action) {
+      state.messages[action.payload] = ++state.messages[action.payload] || 1
+    },
+    clearMessageCount(state, action) {
+      state.messages[action.payload] = 0
     }
   }
 })
@@ -58,6 +64,7 @@ export const getOnlineUsers = (state) => state.user.onlineUsers
 export const getFollowing = (state) => state.user.following
 export const getBookmarks = (state) => state.user.bookmarks
 export const getLikedPosts = (state) => state.user.likedPosts
+export const getMessageCounts = (state) => state.user.messages
 
 export const {
   login,
@@ -66,6 +73,8 @@ export const {
   removeFollowing,
   addToBookMarks,
   removeFromBookmarks,
-  updateLikedPosts
+  updateLikedPosts,
+  incrementMessageCount,
+  clearMessageCount
 } = userSlice.actions
 export default userSlice.reducer

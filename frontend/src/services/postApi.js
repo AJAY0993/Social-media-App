@@ -43,6 +43,15 @@ export const createComment = async ({ postId, comment }) => {
   }
 }
 
+export const deletePost = async (postId) => {
+  try {
+    const res = await axios(`posts/${postId}`, { method: "DELETE" })
+    return res
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}
+
 export const likePost = async (postId) => {
   const res = await axios(`posts/${postId}/like`, { method: "PATCH" })
   return res.data.data

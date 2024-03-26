@@ -1,7 +1,7 @@
 .form {
+    max-width: 100%;
     height: fit-content;
     position: relative;
-    min-width: 18rem;
     margin: 0 auto;
 }
 
@@ -9,10 +9,18 @@
     background: transparent;
     flex-grow: 1;
     align-self: flex-end;
+    font-family: inherit;
+    font-family: inherit;
+    font-family: inherit;
+
     outline: 0;
     border: 0;
     padding: .25em .5em;
     border-bottom: 1px solid var(--clr-main);
+}
+
+.input::placeholder {
+    font-size: inherit;
 }
 
 .buttonWrapper {

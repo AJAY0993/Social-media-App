@@ -1,0 +1,23 @@
+.toggle {
+    cursor: pointer;
+}
+
+.list {
+    background-color: var(--color-stone-300);
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.item {
+    font-weight: 500;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+.item+.item {
+    margin-top: .5em;
+}
+
+.item:hover {
+    background-color: var(--color-stone-400)
+}
