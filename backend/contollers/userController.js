@@ -2,7 +2,6 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
-const redis = require('../configs/redis');
 const { deleteOne } = require('./factory');
 
 const getAllUsers = catchAsync(async (req, res, next) => {
@@ -17,16 +16,7 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const getProfile = catchAsync(async (req, res, next) => {
-  const cachedUser = await redis.get(`users:${req.params.userId}`);
-  if (cachedUser) {
-    return sendResponse(res, 200, 'Profile fetched Successfully', {
-      profile: JSON.parse(cachedUser),
-      cached: true,
-    });
-  }
   const user = await User.findById(req.params.userId);
-  redis.set(`users:${req.params.userId}`, JSON.stringify(user), 'EX', 60);
-
   sendResponse(res, 200, 'Profile fetched Successfully', {
     profile: user,
   });
@@ -37,7 +27,6 @@ const updateMe = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-  redis.set(`users:${req.user.id}`, JSON.stringify(updatedUser), 'EX', 60);
   sendResponse(res, 200, 'Profile updated successfully', {
     profile: updatedUser,
   });
@@ -82,8 +71,6 @@ const unFollow = catchAsync(async (req, res, next) => {
   ]);
 
   await promises;
-  redis.set(`users:${req.user.id}`, JSON.stringify(user), 'EX', 60);
-  redis.set(`users:${unFollowId}`, JSON.stringify(userToUnFollow), 'EX', 60);
   sendResponse(res, 201, 'Followed successfully', {
     unFollowed: userToUnFollow,
   });
@@ -128,8 +115,6 @@ const follow = catchAsync(async (req, res, next) => {
   ]);
 
   await promises;
-  redis.set(`users:${req.user.id}`, JSON.stringify(user), 'EX', 60);
-  redis.set(`users:${followId}`, JSON.stringify(userToFollow), 'EX', 60);
   sendResponse(res, 201, 'Followed successfully', {
     newFollowing: userToFollow,
   });
