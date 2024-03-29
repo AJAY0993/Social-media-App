@@ -32,12 +32,18 @@
 }
 
 .controller {
-    background-color: var(--clr-secondary);
+    background-color: transparent;
     height: 3rem;
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    color: var(--clr-text-color2);
+    gap: 1em;
+    padding: 1em;
+    color: var(--clr-secondary);
+}
+
+.controller>:last-child {
+    margin-left: auto;
 }
 
 .post svg {

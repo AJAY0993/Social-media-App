@@ -2,24 +2,14 @@ const Comment = require('../models/commentModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
-const { deleteOne } = require('./factory');
+const { deleteOne, getAll } = require('./factory');
 
-const addPostId = (req) => {
+const addPostId = (req, res, next) => {
   if (req.params.postId) req.body.postId = req.params.postId;
+  next();
 };
 
-const getPostComments = catchAsync(async (req, res, next) => {
-  addPostId(req);
-  if (!req.body.postId) {
-    return next(new AppError(400, 'Please provide post ID'));
-  }
-
-  const comments = await Comment.find({ post: req.body.postId }).sort({
-    createdAt: -1,
-  });
-
-  sendResponse(res, 200, 'comments fetched successfully', { comments });
-});
+const getComments = getAll(Comment, false, 'comments');
 
 const createComment = catchAsync(async (req, res, next) => {
   addPostId(req);
@@ -44,4 +34,4 @@ const createComment = catchAsync(async (req, res, next) => {
 
 const deleteComment = deleteOne(Comment, true);
 
-module.exports = { createComment, getPostComments, deleteComment };
+module.exports = { createComment, getComments, deleteComment };

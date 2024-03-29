@@ -1,20 +1,10 @@
 const Post = require('../models/postModel');
-const Comment = require('../models/commentModel');
 const catchAsync = require('../utils/catchAsync');
 const cloudinary = require('../configs/cloudinary');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
 const sendResponse = require('../utils/sendResponse');
-const { deleteOne } = require('./factory');
-
-const getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find().sort({ createdAt: -1 });
-  res.status(200).json({
-    status: 'success',
-    message: 'Posts fetched successfully',
-    data: { posts },
-  });
-});
+const { deleteOne, getAll, getOne } = require('./factory');
 
 const createPost = catchAsync(async (req, res, next) => {
   let result;
@@ -52,19 +42,9 @@ const createPost = catchAsync(async (req, res, next) => {
   });
 });
 
-const getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
-  if (post) {
-    post.comments = await Comment.find({ postId: post._id });
-  }
-  res.status(200).json({
-    status: 'success',
-    message: 'Post fetched Successfully',
-    data: {
-      post,
-    },
-  });
-});
+const getAllPosts = getAll(Post, false, 'posts');
+const getPost = getOne(Post, false, 'post');
+const deletePost = deleteOne(Post, true);
 
 const likePost = catchAsync(async (req, res, next) => {
   const { postId } = req.params;
@@ -101,7 +81,5 @@ const likePost = catchAsync(async (req, res, next) => {
     });
   }
 });
-
-const deletePost = deleteOne(Post, true);
 
 module.exports = { getAllPosts, getPost, createPost, likePost, deletePost };

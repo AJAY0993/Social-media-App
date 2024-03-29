@@ -9,14 +9,12 @@ function Modal({ children, onClose }) {
   }
   return createPortal(
     <>
-      <div className={styles.modal__wrapper} onClick={handleClose}>
-        <div className={styles.closeBtn}>
-          <Button type="primary" variation={"circle"} onClick={handleClose}>
-            X
-          </Button>
-        </div>
+      <div className={styles.modal__wrapper} onClick={handleClose}></div>
+      <div className={styles.closeBtn}>
+        <Button type="primary" variation={"circle"} onClick={handleClose}>
+          X
+        </Button>
       </div>
-
       <div className={styles.modal}>
         <section className={styles.modalWindow}>{children}</section>
       </div>

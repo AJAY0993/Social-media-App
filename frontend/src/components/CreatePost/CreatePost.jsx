@@ -44,14 +44,12 @@ function CreatePost() {
   }
   return (
     <section className="flex j-center p1">
-      <div className={styles.userImg}>
-        <img
-          className="btn--circle"
-          src={user?.profilePic}
-          alt="profile-user"
-          border="0"
-        />
-      </div>
+      <img
+        className="btn--circle"
+        src={user?.profilePic}
+        alt="profile-user"
+        border="0"
+      />
       <form
         method="POST"
         className={styles.form}

@@ -23,6 +23,7 @@ const userSlice = createSlice({
       )
       state.following = state.user.following.map((x) => x.followingId)
       state.bookmarks = [...state.user.bookmarks]
+      state.likedPosts = [...state.user.likedPosts]
       state.isAuthenticated = true
       state.status = "idle"
     },

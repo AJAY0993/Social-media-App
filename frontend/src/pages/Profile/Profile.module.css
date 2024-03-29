@@ -37,7 +37,7 @@
 }
 
 .profile__stats>* {
-    height: 100px;
+    height: 6rem;
     aspect-ratio: 1/1;
     text-align: center;
     border: 1px solid var(--clr-text-color2);
