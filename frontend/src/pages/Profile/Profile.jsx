@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import axios from "../../utils/axios"
 import { RiMessage2Line } from "react-icons/ri"
 import { IoPencil } from "react-icons/io5"
 
@@ -93,14 +92,7 @@ function Profile() {
     <section className={styles.profile}>
       <div className={styles.profile__container}>
         <figure className={styles.box + " flex col a-center "}>
-          <img
-            className={styles.avatar}
-            src={
-              profile.profilePic ||
-              "https://randomuser.me/api/portraits/men/99.jpg"
-            }
-            alt=""
-          />
+          <img className={styles.avatar} src={profile.profilePic} alt="" />
           <figcaption>
             <h3>{profile.username}</h3>
 

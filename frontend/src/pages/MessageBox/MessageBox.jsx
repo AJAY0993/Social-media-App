@@ -16,6 +16,7 @@ import Button from "../../components/Button/Button"
 import useProfile from "../../hooks/useProfile"
 import { getOnlineUsers, getUserId } from "../../reducer/userSlice"
 import { useSocket } from "../../context/SocketProvider"
+import CallButon from "../../components/CallButton/CallButon"
 
 function MessageBox() {
   const lastMessageRef = useRef()
@@ -26,9 +27,8 @@ function MessageBox() {
   const [messages, setMessages] = useState([])
   const userId = useSelector(getUserId)
   const back = useBack()
-  const secdondarCaption = onlineUsers.includes(recieverId)
-    ? "online"
-    : "offline"
+  const isOnline = onlineUsers.includes(recieverId)
+  const secondaryCaption = isOnline ? "online" : "offline"
   const {
     messages: previousMessages,
     isFetchingMessages: isFetchingPreviousMessages
@@ -54,8 +54,10 @@ function MessageBox() {
           showBtn={false}
           customClass={styles.user}
           user={profile}
-          secondaryCaption={secdondarCaption}
-        ></User>
+          secondaryCaption={secondaryCaption}
+        >
+          <CallButon userId={profile._id} />
+        </User>
       </div>
       <div className={styles.box}>
         <article className={styles.secondaryHeader + " flex"}>

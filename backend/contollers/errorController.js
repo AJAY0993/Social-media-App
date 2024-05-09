@@ -74,8 +74,6 @@ const globalErrorHandler = (error, req, res, next) => {
     if (error.name === 'JsonWebTokenError') {
       err = jwtError();
     }
-
-    console.log(error);
     sendProductionError(err, res);
   }
 };

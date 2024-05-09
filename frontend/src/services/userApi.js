@@ -71,7 +71,6 @@ export const updateProfile = async (data) => {
       method: "PATCH",
       data: formData
     })
-    console.log(res)
     return res.data.data.profile
   } catch (err) {
     console.log(err)

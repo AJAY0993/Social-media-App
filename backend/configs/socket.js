@@ -13,15 +13,20 @@ const io = new Server(server, {
 
 const userIdToSocketIdMap = {};
 const socketIdToUserIdMap = {};
+const userIdToPeerIdMap = {};
+const socketIdToPeerIdMap = {};
 
 io.on('connection', (socket) => {
   const { userId } = socket.handshake.query;
   const socketId = socket.id;
-  console.log('someone connected');
   socketIdToUserIdMap[socket.id] = userId;
   userIdToSocketIdMap[userId] = socketId;
 
-  io.emit('event:onlineUsers', Object.values(socketIdToUserIdMap));
+  io.emit(
+    'event:onlineUsers',
+    Object.values(socketIdToUserIdMap),
+    userIdToPeerIdMap
+  );
 
   socket.on('event:message', ({ message, recieverId, createdBy }) => {
     socket.to(userIdToSocketIdMap[recieverId]).emit('event:message', {
@@ -30,10 +35,31 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('event:addPeer', (id) => {
+    socketIdToPeerIdMap[socketId] = id;
+    userIdToPeerIdMap[userId] = id;
+    io.emit('event:getPeers', userIdToPeerIdMap);
+  });
+
+  socket.on('event:getSockets', () => {
+    socket.to(socket.id).emit('event:getSockets', userIdToSocketIdMap);
+  });
+
+  socket.on('event:getPeerId', (id) => {
+    socket.to(socket.id).emit('event:getPeerId', socketIdToPeerIdMap[id]);
+  });
+
+  socket.on('event:callRejected', (id) => {
+    socket.to(userIdToSocketIdMap[id]).emit('callRejected');
+  });
+
   socket.on('disconnect', () => {
     delete userIdToSocketIdMap[userId];
     delete socketIdToUserIdMap[socketId];
+    delete socketIdToPeerIdMap[socketId];
+    delete userIdToPeerIdMap[userId];
     io.emit('event:onlineUsers', Object.values(socketIdToUserIdMap));
+    socket.emit('event:getPeers', userIdToPeerIdMap);
   });
 });
 

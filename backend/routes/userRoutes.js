@@ -12,54 +12,33 @@ Router.route('/login').post(authController.login);
 Router.route('/forgotPassword').post(authController.forgotPassword);
 Router.route('/resetPassword/:token').post(authController.resetPassword);
 
+Router.use(authController.isAuthenticated);
+
 Router.route('/myProfile')
-  .get(
-    authController.isAuthenticated,
-    (req, res, next) => {
-      req.params.userId = req.user.id;
-      next();
-    },
-    userController.getProfile
-  )
+  .get((req, res, next) => {
+    req.params.id = req.user.id;
+    next();
+  }, userController.getProfile)
   .patch(
-    authController.isAuthenticated,
     upload.single('profilePic'),
     filterUnnecessaryFieldsAndAddImage,
     userController.updateMe
   );
 
-Router.route('/').get(
-  authController.isAuthenticated,
-  userController.getAllUsers
-);
+Router.route('/').get(userController.getAllUsers);
 
-Router.route('/:userId').get(
-  authController.isAuthenticated,
-  userController.getProfile
-);
+Router.route('/:id').get(userController.getProfile);
 
-Router.route('/myProfile/bookmarks').get(
-  authController.isAuthenticated,
-  userController.getBookmarks
-);
+Router.route('/myProfile/bookmarks').get(userController.getBookmarks);
 
 Router.route('/myProfile/bookmarks/:postId')
-  .patch(authController.isAuthenticated, userController.addToBookmarks)
-  .delete(authController.isAuthenticated, userController.removeFromBookmarks);
+  .patch(userController.addToBookmarks)
+  .delete(userController.removeFromBookmarks);
 
-Router.route('/follow/:followId').patch(
-  authController.isAuthenticated,
-  userController.follow
-);
+Router.route('/follow/:followId').patch(userController.follow);
 
-Router.route('/unFollow/:unFollowId').delete(
-  authController.isAuthenticated,
-  userController.unFollow
-);
+Router.route('/unFollow/:unFollowId').delete(userController.unFollow);
 
-Router.route('/:userId/followers').get(
-  authController.isAuthenticated,
-  userController.getFollowers
-);
+Router.route('/:userId/followers').get(userController.getFollowers);
 
 module.exports = Router;

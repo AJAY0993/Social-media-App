@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { app } = require('./configs/socket');
+const peerServer = require('./configs/peer');
 const commentsNotification = require('./services/commentsNotification');
 
 const userRouter = require('./routes/userRoutes');
@@ -30,8 +31,9 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/dist')));
 
+app.use('peerjs', peerServer);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/messages', messageRouter);
@@ -40,7 +42,7 @@ app.use('/api/comments', commentRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
   });
 }
 
