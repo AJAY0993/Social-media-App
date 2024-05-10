@@ -53,7 +53,9 @@ const createMessage = catchAsync(async (req, res, next) => {
 
   sendNotification([reciever.firebaseToken], notification);
   io.to(userIdToSocketIdMap[recieverId]).emit('event:message', {
-    message: { ...message, senderProfilePic: 'req.user.profilePic' },
+    message: message.message,
+    _id: message._id,
+    sender: { _id: req.user.id, profilePic: req.user.profilePic },
   });
   res.status(201).json({
     status: 'success',
