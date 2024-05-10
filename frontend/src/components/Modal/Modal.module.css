@@ -6,6 +6,7 @@
     bottom: 0;
     background-color: var(--clr-secondary);
     opacity: .8;
+    z-index: 100;
 }
 
 
@@ -13,7 +14,7 @@
     position: absolute;
     right: 1em;
     top: .5em;
-
+    z-index: 1000;
 }
 
 .modal {
@@ -29,6 +30,7 @@
     border-radius: .4em;
     background-color: var(--clr-primary);
     overflow-y: scroll;
+    z-index: 1000;
 
 }
 

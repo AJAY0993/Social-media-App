@@ -14,9 +14,7 @@ function usePostDelete() {
   } = useMutation({
     mutationFn: deletePostApi,
     onSuccess: () => {
-      toast.success(
-        "Post deleted successfully changes will reflected on next reload or refresh"
-      ),
+      toast.success("Post deleted successfully"),
         queryClient.invalidateQueries({
           queryKey: [`user:${userId}`]
         })

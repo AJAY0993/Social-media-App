@@ -5,14 +5,8 @@ import usePosts from "../../hooks/usePosts"
 import Button from "../Button/Button"
 
 function Feed() {
-  const {
-    data,
-    isPending,
-    isFetching,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage
-  } = usePosts()
+  const { data, isPending, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    usePosts()
   if (isPending) return <Loader />
 
   return (

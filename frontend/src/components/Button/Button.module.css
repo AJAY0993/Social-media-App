@@ -39,6 +39,12 @@
     color: var(--clr-primary);
 }
 
+.danger {
+    background-color: var(--clr-danger);
+    border: 2px solid #991b1b;
+    color: var(--clr-primary);
+}
+
 .small {
     padding: .25em;
     font-size: .9rem;

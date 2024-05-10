@@ -1,40 +1,32 @@
 .form {
-    max-width: 100%;
-    height: fit-content;
-    position: relative;
-    margin: 0 auto;
+    padding: .5em 1em;
+    border-top: 1px solid var(--clr-light-gray-text);
 }
 
 .input {
-    background: transparent;
-    flex-grow: 1;
-    align-self: flex-end;
-    font-family: inherit;
-    font-family: inherit;
-    font-family: inherit;
-
+    background: var(--clr-very-light-gray-text);
+    width: 100%;
     outline: 0;
     border: 0;
-    padding: .25em .5em;
-    border-bottom: 1px solid var(--clr-main);
+    padding: .8em .5em;
+    border-radius: .5em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .input::placeholder {
     font-size: inherit;
 }
 
-.buttonWrapper {
-
+.sendButton {
     position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+    right: .5em;
+    top: .5em;
+    cursor: pointer;
+    color: var(--clr-green-main);
 }
 
-.buttonWrapper button {
-    color: var(--clr-main);
-    background-color: transparent;
-    outline: 0;
-    font-size: 1.5rem;
-    border: 0;
+.sendButton:disabled {
+    cursor: not-allowed;
 }

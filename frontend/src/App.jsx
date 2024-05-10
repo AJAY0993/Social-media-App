@@ -19,7 +19,8 @@ const Home = lazy(() => import("./pages/Home/Home"))
 const Explore = lazy(() => import("./pages/Explore/Explore"))
 const Bookmarks = lazy(() => import("./pages/Bookmarks/Bookmarks"))
 const Conversations = lazy(() => import("./pages/Conversations/Conversations"))
-const MessageBox = lazy(() => import("./pages/MessageBox/MessageBox"))
+const Call = lazy(() => import("./pages/Call/Call"))
+const PageForEachChat = lazy(() => import("./pages/MessageBox/PageForEachChat"))
 const Profile = lazy(() => import("./pages/Profile/Profile"))
 const PageNotFound = lazy(() => import("./pages/404/PageNotFound"))
 
@@ -76,7 +77,11 @@ function App() {
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/bookmarks" element={<Bookmarks />} />
                 <Route path="/messages" element={<Conversations />} />
-                <Route path="/messages/:recieverId" element={<MessageBox />} />
+                <Route path="/call" element={<Call />} />
+                <Route
+                  path="/messages/:recieverId"
+                  element={<PageForEachChat />}
+                />
                 <Route path="/profile/:userId" element={<Profile />} />
               </Route>
               <Route path="*" element={<PageNotFound />} />

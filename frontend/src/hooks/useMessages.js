@@ -7,7 +7,7 @@ function useMessages() {
   const { data: messages, isFetchingMessages } = useQuery({
     queryFn: async () => {
       try {
-        const res = await axios(`conversations/to?reciever=${recieverId}`)
+        const res = await axios(`conversations/to?receiver=${recieverId}`)
         const conversation = res.data.data
         return conversation.messages
       } catch (error) {

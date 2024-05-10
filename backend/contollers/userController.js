@@ -2,27 +2,15 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
-const { deleteOne } = require('./factory');
+const { deleteOne, getAll, getOne } = require('./factory');
 
-const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find({ active: true, _id: { $ne: req.user.id } });
-  res.status(200).json({
-    status: 'success',
-    message: 'Users fetched successfully',
-    data: {
-      users,
-    },
-  });
+const getAllUsers = getAll(User, false, 'users', {
+  active: true,
 });
 
-const getProfile = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.userId);
-  sendResponse(res, 200, 'Profile fetched Successfully', {
-    profile: user,
-  });
-});
+const getProfile = getOne(User, false, 'profile');
 
-const updateMe = catchAsync(async (req, res, next) => {
+const updateMe = catchAsync(async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
     new: true,
     runValidators: true,
@@ -165,6 +153,7 @@ const removeFromBookmarks = catchAsync(async (req, res, next) => {
 });
 
 const deleteUser = deleteOne(User);
+
 module.exports = {
   getProfile,
   getAllUsers,

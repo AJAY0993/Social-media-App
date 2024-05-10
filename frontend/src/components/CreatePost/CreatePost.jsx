@@ -56,7 +56,7 @@ function CreatePost() {
         encType="multipart/form-data"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className={styles.form__container + " flex col"}>
+        <div className={styles.formContainer + " flex col"}>
           <div className={styles.imgPreview}>
             {selectedImage?.[0] && (
               <img src={URL.createObjectURL(selectedImage[0])} />

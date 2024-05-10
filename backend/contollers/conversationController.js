@@ -6,7 +6,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
 
-const getConversations = catchAsync(async (req, res, next) => {
+const getConversations = catchAsync(async (req, res) => {
   const conversations = await Conversation.find();
 
   return res.status(200).json({
@@ -30,8 +30,6 @@ const createConversation = catchAsync(async (req, res, next) => {
   const participants = [participant1, participant2];
   let conversation = await Conversation.create({
     participants,
-    sender: { username: req.user.username, profilePic: req.user.profilePic },
-    reciever: { username: reciever.username, profilePic: reciever.profilePic },
   });
   conversation = conversation.toObject();
   conversation.messages = [];
@@ -45,7 +43,7 @@ const createConversation = catchAsync(async (req, res, next) => {
   });
 });
 
-const getConversation = catchAsync(async (req, res, next) => {
+const getConversation = catchAsync(async (req, res) => {
   const conversation = await Conversation.findOne(req.params.id);
 
   return res.satus(200).json({
@@ -56,7 +54,7 @@ const getConversation = catchAsync(async (req, res, next) => {
   });
 });
 
-const getUserConversations = catchAsync(async (req, res, next) => {
+const getUserConversations = catchAsync(async (req, res) => {
   const conversations = await Conversation.find({
     participants: { $all: [req.user.id] },
   }).populate('participants');
@@ -67,10 +65,14 @@ const getUserConversations = catchAsync(async (req, res, next) => {
 });
 
 const getUserConversation = catchAsync(async (req, res, next) => {
-  const { reciever } = req.query;
-  if (!reciever) return next(new AppError(400, 'Please provide Reciever'));
+  const { receiver } = req.query;
+  if (!receiver) {
+    return next(new AppError(400, 'Please provide Reciever'));
+  }
   let conversation = await Conversation.findOne({
-    participants: { $all: [req.user.id, reciever] },
+    participants: {
+      $all: [req.user.id, receiver],
+    },
   });
   if (!conversation) {
     return next(new AppError(400, 'Conversation is not initialized yet'));

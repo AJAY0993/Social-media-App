@@ -3,11 +3,11 @@ const AppError = require('../utils/appError');
 const ApiFeatures = require('../utils/apiFeatures');
 const sendResponse = require('../utils/sendResponse');
 
-const getAll = (Modal, isRestrictToCreator, feildName) =>
-  catchAsync(async (req, res, next) => {
-    let filter;
+const getAll = (Modal, isRestrictToCreator, feildName, additionalFilter) =>
+  catchAsync(async (req, res) => {
+    let filter = { ...additionalFilter };
     if (req.params.postId) {
-      filter = { post: req.params.postId };
+      filter = { ...filter, post: req.params.postId };
     }
     const query = new ApiFeatures(Modal.find(filter), req.query);
     query.filter().sort().paginate();
