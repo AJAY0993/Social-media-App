@@ -3,4 +3,11 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    margin-bottom: 3rem;
+}
+
+@media (min-width:34.5rem) {
+    .messagesContainer {
+        margin-bottom: 0;
+    }
 }

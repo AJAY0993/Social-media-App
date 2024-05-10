@@ -27,3 +27,5 @@
 .user:hover {
     background-color: transparent;
 }
+
+@media (min-width:34.5rem) {}

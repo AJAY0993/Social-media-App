@@ -3,16 +3,19 @@ import useSendMessage from "../../hooks/useSendMessage"
 import Button from "../Button/Button"
 import { IoSendSharp } from "react-icons/io5"
 import styles from "./SendMessage.module.css"
+import { useSelector } from "react-redux"
+import { getUser } from "../../reducer/userSlice"
 
 function SendMessage({ setMessages }) {
-  const messageRef = useRef("")
+  const messageRef = useRef()
+  const user = useSelector(getUser)
   const { sendMessage } = useSendMessage()
   const messageSentAudio = new Audio("/audio/sent.mp3")
   const handleSendingMessage = (e) => {
     e.preventDefault()
     if (messageRef.current.value === "") return
     const message = messageRef.current.value
-    setMessages((s) => [...s, { message, sent: true }])
+    setMessages((s) => [...s, { message, sender: { ...user }, sent: true }])
     sendMessage(message)
     messageSentAudio.play()
     messageRef.current.value = ""
