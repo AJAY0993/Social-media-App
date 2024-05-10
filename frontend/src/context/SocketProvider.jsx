@@ -24,9 +24,8 @@ const url = import.meta.env.DEV
   : window.location.origin
 
 function SocketProvider({ children }) {
-  const [remoteStream, setRemoteStream] = useState(null)
   const [socket, setSocket] = useState(null)
-  const [sockets, setSockets] = useState({})
+  const [setSockets] = useState({})
   const [peer, setPeer] = useState(null)
   const [peers, setPeers] = useState({})
   const { recieverId } = useParams()
@@ -69,24 +68,21 @@ function SocketProvider({ children }) {
 
   useEffect(() => {
     if (!socket) return
-    const peer = new Peer()
+    const peer = new Peer(socket.id)
     peer.on("open", (id) => {
-      console.log("Current Peer ID:", id)
       socket.emit("event:addPeer", id)
       setPeer(peer)
     })
     peer.on("call", function (call) {
-      alert("Incoming call")
-      dispatch(setCall(call))
       const accepted = confirm(
         "Someone is calling you Do you want to pick up the call?"
       )
 
       console.log(accepted)
-      getUserMedia(
-        { video: true, audio: true },
-        function (stream) {
-          if (accepted) {
+      if (accepted) {
+        getUserMedia(
+          { video: true, audio: true },
+          function (stream) {
             call.answer(stream) // Answer the call with an A/V stream.
             call.on("stream", function (remoteStream) {
               console.log("Successfully called")
@@ -94,44 +90,45 @@ function SocketProvider({ children }) {
 
               console.log("Dispatched setIsOnCall")
               // 2.) Set remote stream and My stream
-              setRemoteStream(remoteStream)
-              console.log("Done Setting remote stream")
+              // 2.5) create video element
+              const remoteVideo = document.createElement("video")
+              remoteVideo.srcObject = remoteStream
+              remoteVideo.autoplay = true
+              document.querySelector("#call-box").appendChild(remoteVideo)
+              // 3.) Navigate to call Page
+              navigate("/call")
 
-              // 3.) Set a listener on close event
+              // 4.) Set a listener on close event
               call.on("close", () => {
                 alert("Call finished")
+                remoteVideo.remove()
                 stream.getTracks().forEach(function (track) {
                   track.stop()
                 })
                 dispatch(cutCall())
-                navigate(-1, { replace: true })
+                navigate("/", { replace: true })
               })
-
-              // 4.) Navigate to call Page
-              navigate("/call")
             })
-          }
-          if (!accepted) {
+          },
+          function (err) {
+            console.log(err)
             call.close()
-            dispatch(reset())
-            alert("You rejected call")
-            dispatch(cutCall())
-            socket.emit("event:callRejected", _id)
+            socket.emit("event:callRejected", "username")
           }
-        },
-        function (err) {
-          console.log(err)
-          call.close()
-          socket.emit("event:callRejected", "username")
-        }
-      )
+        )
+      }
+      if (!accepted) {
+        call.close()
+        dispatch(reset())
+        alert("You rejected call")
+        dispatch(cutCall())
+        socket.emit("event:callRejected", _id)
+      }
     })
   }, [socket])
 
   return (
-    <socketContext.Provider
-      value={{ socket, peer, peers, remoteStream, setRemoteStream }}
-    >
+    <socketContext.Provider value={{ socket, peer, peers }}>
       {children}
     </socketContext.Provider>
   )

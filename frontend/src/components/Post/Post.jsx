@@ -1,3 +1,4 @@
+import { useState } from "react"
 import PropTypes from "prop-types"
 
 import { IoHeartOutline, IoShareSocialOutline } from "react-icons/io5"
@@ -11,28 +12,23 @@ import {
 import { FcLike } from "react-icons/fc"
 import User from "../User/User"
 import styles from "./Post.module.css"
-import Modal from "../Modal/Modal"
-import List from "./../List/List"
-import Comment from "./../Comment/Comment"
-import CreateComment from "../CreateComment/CreateComment"
 import useComments from "../../hooks/useComments"
 import useAddToBookMarks from "../../hooks/useAddToBookmarks"
 import useRemoveFromBookmarks from "./../../hooks/useRemoveFromBookmarks"
 import { useSelector } from "react-redux"
-import Loader from "./../Loader/Loader"
 import useLike from "../../hooks/useLike"
 import Dropdown from "../Dropdown/Dropdown"
 import { getBookmarks, getLikedPosts, getUserId } from "../../reducer/userSlice"
 import { formatDate } from "../../utils/helpers"
-import { useState } from "react"
 import usePostDelete from "../../hooks/usePostDelete"
+import CommentsContainer from "../CommentsContainer/CommentsContainer"
 
 Post.propTypes = {
   post: PropTypes.object
 }
 
 function Post({ post }) {
-  const [showModal, setShowModal] = useState(false)
+  const [showComments, setShowComments] = useState(false)
 
   const bookmarks = useSelector(getBookmarks)
   const likedPosts = useSelector(getLikedPosts)
@@ -58,11 +54,18 @@ function Post({ post }) {
       return <FcLike onClick={() => like(post._id)} />
     return <IoHeartOutline onClick={() => like(post._id)} />
   }
-  const handleDeletePost = () => deletePost(post._id)
+  const handleDeletePost = () =>
+    deletePost(post._id, {
+      onSuccess: () => {
+        const postElement = document.querySelector(
+          '[data-id="' + post._id + '"]'
+        )
+        postElement.remove()
+      }
+    })
 
-  const onClose = () => setShowModal(false)
   return (
-    <div>
+    <div data-id={post._id}>
       <article className={styles.post}>
         <div className={styles.user__wrapper}>
           <User
@@ -100,28 +103,16 @@ function Post({ post }) {
           <div className={styles.controller}>
             {handleLiking()}
             <IoShareSocialOutline />
-            <FaRegComments onClick={() => setShowModal(true)} />
+            <FaRegComments onClick={() => setShowComments((s) => !s)} />
             {handleBookMarking()}
-            {showModal && (
-              <Modal onClose={onClose}>
-                {isLoading ? (
-                  "Loading..."
-                ) : (
-                  <div className="px-1">
-                    <CreateComment postId={post._id} close={onClose} />
-                    <List
-                      items={comments}
-                      render={(comment) => (
-                        <Comment comment={comment} key={comment._id} />
-                      )}
-                      title={"Comments"}
-                      failureMessage={"No comments yet"}
-                    ></List>
-                  </div>
-                )}
-              </Modal>
-            )}
           </div>
+          {showComments && (
+            <CommentsContainer
+              comments={comments}
+              postId={post._id}
+              isLoading={isLoading}
+            />
+          )}
         </div>
       </article>
     </div>

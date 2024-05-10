@@ -22,18 +22,14 @@ io.on('connection', (socket) => {
   socketIdToUserIdMap[socket.id] = userId;
   userIdToSocketIdMap[userId] = socketId;
 
-  io.emit(
-    'event:onlineUsers',
-    Object.values(socketIdToUserIdMap),
-    userIdToPeerIdMap
-  );
+  io.emit('event:onlineUsers', Object.values(socketIdToUserIdMap));
 
-  socket.on('event:message', ({ message, recieverId, createdBy }) => {
-    socket.to(userIdToSocketIdMap[recieverId]).emit('event:message', {
-      message,
-      createdBy: socketIdToUserIdMap[socketId],
-    });
-  });
+  // socket.on('event:message', ({ message, recieverId, createdBy }) => {
+  //   socket.to(userIdToSocketIdMap[recieverId]).emit('event:message', {
+  //     message,
+  //     createdBy: socketIdToUserIdMap[socketId],
+  //   });
+  // });
 
   socket.on('event:addPeer', (id) => {
     socketIdToPeerIdMap[socketId] = id;

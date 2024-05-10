@@ -8,9 +8,9 @@ const {
   sendNotificationToAllUsers: sendNotification,
 } = require('../services/firebase');
 
-const getAllMessage = catchAsync(async (req, res, next) =>
-  next(new AppError(404, 'This route is not implemented yet'))
-);
+const getAllMessage = catchAsync(async (req, res, next) => {
+  return next(new AppError(404, 'This route is not implemented yet'));
+});
 
 const createMessage = catchAsync(async (req, res, next) => {
   const senderId = req.user.id;
@@ -52,7 +52,9 @@ const createMessage = catchAsync(async (req, res, next) => {
   };
 
   sendNotification([reciever.firebaseToken], notification);
-  io.to(userIdToSocketIdMap[recieverId]).emit('event:message', message);
+  io.to(userIdToSocketIdMap[recieverId]).emit('event:message', {
+    message: { ...message, senderProfilePic: 'req.user.profilePic' },
+  });
   res.status(201).json({
     status: 'success',
     data: {

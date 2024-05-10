@@ -20,6 +20,7 @@ function CallButon({ userId }) {
   const { peer, peers } = useSocket()
   const onlinesUsers = useSelector(getOnlineUsers)
   const isOnline = onlinesUsers.includes(userId)
+  console.log(onlinesUsers, userId)
   const handleCall = async () => {
     if (!isOnline) {
       return toast.error("User is offline can not call right now")

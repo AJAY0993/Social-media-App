@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import Button from "../../components/Button/Button"
 import { getCall, getIsOnCall } from "../../reducer/peerSlice"
-import { useSocket } from "../../context/SocketProvider"
 import styles from "./Call.module.css"
 
 const getUserMedia =
@@ -14,10 +13,8 @@ const getUserMedia =
 function Call() {
   const navigate = useNavigate()
   const localRef = useRef(null)
-  const remoteRef = useRef(null)
   const isOnCall = useSelector(getIsOnCall)
   const call = useSelector(getCall)
-  const { remoteStream } = useSocket()
 
   const handleCallRejection = () => {
     call.close()
@@ -37,28 +34,19 @@ function Call() {
         .catch((err) => console.log(err))
     }
   }, [])
-  useEffect(() => {
-    if (remoteRef.current !== null) {
-      remoteRef.current.srcObject = remoteStream
-    }
-  }, [remoteStream])
+
   if (!isOnCall) return <h3>Not on a call</h3>
 
   return (
     <section>
-      <div className={styles.container} id="uiui">
+      <div className={styles.container} id="call-box">
         <video
           className={styles.localVid}
           autoPlay
           playsInline
           ref={localRef}
         />
-        <video
-          className={styles.remoteVid + "flex a-center j-center"}
-          autoPlay
-          playsInline
-          ref={remoteRef}
-        />
+
         <Button type="danger" onClick={handleCallRejection}>
           Cut
         </Button>

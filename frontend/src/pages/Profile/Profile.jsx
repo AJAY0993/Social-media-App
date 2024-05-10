@@ -100,9 +100,7 @@ function Profile() {
           </figcaption>
         </figure>
 
-        <div className={styles.btn__container + " flex j-center"}>
-          {isMe(profile._id)}
-        </div>
+        <div className={styles.btnContainer}>{isMe(profile._id)}</div>
         <div className={styles.profile__stats + " flex j-center"}>
           <Followers profile={profile} />
           <Following profile={profile} />

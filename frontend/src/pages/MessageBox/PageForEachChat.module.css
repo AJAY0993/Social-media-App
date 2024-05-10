@@ -1,0 +1,29 @@
+.pageForEachChat {
+    background: rgb(26, 54, 20);
+    background: linear-gradient(183deg, rgba(26, 54, 20, 1) 0%, rgba(22, 130, 8, 1) 100%);
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--clr-light-gray-text);
+    padding: 0 1em;
+    background: rgb(26, 54, 20);
+    background: linear-gradient(183deg, rgba(26, 54, 20, 1) 0%, rgba(22, 130, 8, 1) 100%);
+    z-index: 10;
+}
+
+.user {
+    flex-grow: 1;
+    border: 0;
+}
+
+.user:hover {
+    background-color: transparent;
+}

@@ -4,7 +4,12 @@
     width: 100%;
 }
 
-.myVid {
+.remoteVid {
+    height: 100%;
+    width: 100%;
+}
+
+.localVidVid {
     height: 150px;
     width: 50px;
     border-radius: .5rem;

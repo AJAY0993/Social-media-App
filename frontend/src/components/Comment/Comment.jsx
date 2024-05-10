@@ -4,18 +4,25 @@ import styles from "./Comment.module.css"
 function Comment({ comment }) {
   return (
     <>
-      <div className={`${styles.comment} flex g-1`}>
-        <img src={comment.creator.profilePic} alt="profilePic" />{" "}
-        <div className="flex col">
-          <div className={`${styles.commentHeader} flex  g-1 `}>
-            <span className={styles.username}>{comment.creator.username}</span>
-            <span className={styles.timeSpan}>
+      <li className={`${styles.commentContainer}`}>
+        <img
+          className={styles.commentImage}
+          src={comment.creator.profilePic}
+          alt="profilePic"
+        />
+        <div className={styles.commentText + " flex col"}>
+          <div className={` flex a-center  g-1 `}>
+            <span className={styles.commentName}>
+              {comment.creator.username}
+            </span>
+
+            <span className={styles.commentTime}>
               {formatDate(comment.createdAt)}
             </span>
           </div>
           <p className={styles.commentBody}>{comment.comment}</p>
         </div>
-      </div>
+      </li>
     </>
   )
 }

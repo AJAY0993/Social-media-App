@@ -21,12 +21,18 @@
     overflow: hidden;
 }
 
-.btn__container {
+.btnContainer {
     gap: 1em;
+    display: flex;
+    justify-content: center;
 }
 
-.btn__container :global(.btn) {
+.btnContainer :global(.btn) {
     max-width: 150px;
+}
+
+.btnContainer button {
+    margin: 0;
 }
 
 .profile__stats {

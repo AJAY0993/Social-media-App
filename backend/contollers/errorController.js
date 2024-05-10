@@ -33,6 +33,7 @@ const sendProductionError = (error, res) => {
       message: error.message,
     });
   }
+  console.log(error);
   return res.status(500).json({
     status: 'error',
     message: 'some thing went wrong',
