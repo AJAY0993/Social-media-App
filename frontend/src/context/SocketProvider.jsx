@@ -11,8 +11,7 @@ import {
   setOnlineUsers
 } from "../reducer/userSlice"
 import { cutCall, getIsOnCall, reset, setCall } from "../reducer/peerSlice"
-import toast from "react-hot-toast"
-
+import { toast } from "react-hot-toast"
 const getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
@@ -25,7 +24,6 @@ const url = import.meta.env.DEV
 
 function SocketProvider({ children }) {
   const [socket, setSocket] = useState(null)
-  const [setSockets] = useState({})
   const [peer, setPeer] = useState(null)
   const [peers, setPeers] = useState({})
   const { recieverId } = useParams()
@@ -44,10 +42,6 @@ function SocketProvider({ children }) {
       dispatch(setOnlineUsers(onlineUsers))
     })
 
-    socket.emit("event:getSockets", () => {
-      socket.on("event:getSockets", (sockets) => setSockets(sockets))
-    })
-
     socket.on("event:message", (message) => {
       if (recieverId !== message.sender) {
         dispatch(incrementMessageCount(message.sender))
@@ -56,10 +50,6 @@ function SocketProvider({ children }) {
 
     socket.on("event:getPeers", (userIdToPeerIdMap) => {
       setPeers(userIdToPeerIdMap)
-    })
-
-    socket.on("event:callRejected", () => {
-      toast.error("Your call got rejected")
     })
 
     setSocket(socket)
@@ -82,35 +72,40 @@ function SocketProvider({ children }) {
       if (accepted) {
         getUserMedia(
           { video: true, audio: true },
-          function (stream) {
+          (stream) => {
             call.answer(stream) // Answer the call with an A/V stream.
             call.on("stream", function (remoteStream) {
               console.log("Successfully called")
-              // 1.) Set on Call Status true
 
+              // 1.) Set on Call Status true
               console.log("Dispatched setIsOnCall")
-              // 2.) Set remote stream and My stream
-              // 2.5) create video element
+
+              // 2.) Navigate to call Page
+              navigate("/call")
+
+              // 3.) Set remote stream and My stream
+              // 3.5) create video element
               const remoteVideo = document.createElement("video")
               remoteVideo.srcObject = remoteStream
               remoteVideo.autoplay = true
               document.querySelector("#call-box").appendChild(remoteVideo)
-              // 3.) Navigate to call Page
-              navigate("/call")
 
               // 4.) Set a listener on close event
               call.on("close", () => {
-                alert("Call finished")
+                toast("Call finished", { icon: "😔" })
                 remoteVideo.remove()
-                stream.getTracks().forEach(function (track) {
-                  track.stop()
+                stream.getTracks().forEach((track) => {
+                  console.log("jkjkjk")
+                  if (track.readyState == "live") {
+                    track.stop()
+                  }
                 })
                 dispatch(cutCall())
                 navigate("/", { replace: true })
               })
             })
           },
-          function (err) {
+          (err) => {
             console.log(err)
             call.close()
             socket.emit("event:callRejected", "username")
@@ -120,7 +115,6 @@ function SocketProvider({ children }) {
       if (!accepted) {
         call.close()
         dispatch(reset())
-        alert("You rejected call")
         dispatch(cutCall())
         socket.emit("event:callRejected", _id)
       }

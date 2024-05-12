@@ -4,9 +4,8 @@ const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
 const { deleteOne, getAll } = require('./factory');
 
-const addPostId = (req, res, next) => {
+const addPostId = (req) => {
   if (req.params.postId) req.body.postId = req.params.postId;
-  next();
 };
 
 const getComments = getAll(Comment, false, 'comments');

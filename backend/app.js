@@ -7,7 +7,6 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { app } = require('./configs/socket');
-const peerServer = require('./configs/peer');
 const commentsNotification = require('./services/commentsNotification');
 
 const userRouter = require('./routes/userRoutes');
@@ -33,7 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/dist')));
 
-app.use('peerjs', peerServer);
+// app.use('peerjs', peerServer);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/messages', messageRouter);

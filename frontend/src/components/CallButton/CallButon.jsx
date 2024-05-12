@@ -35,7 +35,7 @@ function CallButon({ userId }) {
         setRemoteStream(remoteStream)
       })
       call.on("close", () => {
-        alert("Call finished")
+        toast("Call finished", { icon: "ℹ️" })
         dispatch(cutCall())
         stream.getTracks().forEach(function (track) {
           track.stop()

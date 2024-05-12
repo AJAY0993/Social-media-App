@@ -24,13 +24,6 @@ io.on('connection', (socket) => {
 
   io.emit('event:onlineUsers', Object.values(socketIdToUserIdMap));
 
-  // socket.on('event:message', ({ message, recieverId, createdBy }) => {
-  //   socket.to(userIdToSocketIdMap[recieverId]).emit('event:message', {
-  //     message,
-  //     createdBy: socketIdToUserIdMap[socketId],
-  //   });
-  // });
-
   socket.on('event:addPeer', (id) => {
     socketIdToPeerIdMap[socketId] = id;
     userIdToPeerIdMap[userId] = id;
@@ -43,10 +36,6 @@ io.on('connection', (socket) => {
 
   socket.on('event:getPeerId', (id) => {
     socket.to(socket.id).emit('event:getPeerId', socketIdToPeerIdMap[id]);
-  });
-
-  socket.on('event:callRejected', (id) => {
-    socket.to(userIdToSocketIdMap[id]).emit('callRejected');
   });
 
   socket.on('disconnect', () => {
