@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--clr-secondary);
+    background-color: var(--clr-white);
     opacity: .8;
     z-index: 100;
 }
@@ -26,7 +26,7 @@
     left: 50%;
     padding: .5em;
     transform: translate(-50%, -50%);
-    border: 1px solid black;
+    border: 1px solid var(--clr-green-main);
     border-radius: .4em;
     background-color: var(--clr-primary);
     overflow-y: scroll;
@@ -43,4 +43,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (min-width:34.5rem) {
+    .modalWindow {
+        width: 30rem;
+    }
 }

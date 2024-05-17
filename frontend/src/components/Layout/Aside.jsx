@@ -13,25 +13,10 @@ import User from "../User/User"
 import Button from "../Button/Button"
 
 import styles from "./Layout.module.css"
+import { useState } from "react"
 
 function Aside() {
-  const dispatch = useDispatch()
   const { users, isLoading: isFetchingUsers } = useUsers()
-  const { follow, isFollowing } = useFollow()
-  const { unFollow, isUnFollowing } = useUnFollow()
-  const following = useSelector(getFollowing)
-
-  const btnType = (id) => {
-    return following.includes(id) ? "secondary" : "primary"
-  }
-  const btnText = (id) => {
-    return following.includes(id) ? "Unfollow" : "Follow"
-  }
-  const btnOnClick = (id) => {
-    return following.includes(id)
-      ? () => unFollow(id, { onSuccess: () => dispatch(removeFollowing(id)) })
-      : () => follow(id, { onSuccess: () => dispatch(addFollowing(id)) })
-  }
 
   if (isFetchingUsers) return <Loader />
   return (
@@ -41,16 +26,7 @@ function Aside() {
           items={users}
           render={(user) => (
             <User key={user._id} user={user}>
-              {
-                <Button
-                  type={btnType(user._id)}
-                  onClick={btnOnClick(user._id)}
-                  width={"normal"}
-                  disabled={isFollowing || isUnFollowing}
-                >
-                  {btnText(user._id)}
-                </Button>
-              }
+              <FollowUnfollow userId={user._id} />
             </User>
           )}
           title={"Who to follow"}
@@ -58,6 +34,64 @@ function Aside() {
         />
       </div>
     </aside>
+  )
+}
+
+function FollowUnfollow({ userId }) {
+  const [state, setState] = useState({
+    type: "primary",
+    text: "Following"
+  })
+  const dispatch = useDispatch()
+  const { follow, isFollowing } = useFollow()
+  const { unFollow, isUnFollowing } = useUnFollow()
+  const following = useSelector(getFollowing)
+  const isFollowingAlready = following.includes(userId)
+
+  const handleMouseLeave = () => {
+    setState((_) => ({
+      variation: "",
+      type: "secondary",
+      text: "Following"
+    }))
+  }
+  const handleMouseEnter = () => {
+    setState((s) => ({
+      variation: "danger",
+      text: "Unfollow"
+    }))
+  }
+
+  const handleFollow = () =>
+    follow(userId, { onSuccess: () => dispatch(addFollowing(userId)) })
+
+  const handleUnfollow = () =>
+    unFollow(userId, { onSuccess: () => dispatch(removeFollowing(userId)) })
+
+  if (!isFollowingAlready)
+    return (
+      <Button
+        type="primary"
+        onClick={handleFollow}
+        width="normal"
+        disabled={isFollowing || isUnFollowing}
+      >
+        Follow
+      </Button>
+    )
+
+  return (
+    <Button
+      type={state.type}
+      onClick={handleUnfollow}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      variation={state.variation}
+      width="normal"
+      disabled={isFollowing || isUnFollowing}
+    >
+      {state.text}
+    </Button>
   )
 }
 

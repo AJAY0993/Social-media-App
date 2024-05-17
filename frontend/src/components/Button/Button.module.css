@@ -3,7 +3,7 @@
     max-width: 100%;
     max-height: 45px;
     display: block;
-    font-weight: 500;
+    font-weight: 600;
     font-size: var(--fs-regular);
     font-style: normal;
     display: flex;
@@ -36,13 +36,13 @@
 .primary {
     background-color: var(--clr-main);
     border: 2px solid var(--clr-main);
-    color: var(--clr-primary);
+    color: #fff;
 }
 
 .danger {
     background-color: var(--clr-danger);
     border: 2px solid #991b1b;
-    color: var(--clr-primary);
+    color: white;
 }
 
 .small {
@@ -60,8 +60,8 @@
 }
 
 .primary:hover {
-    background-color: var(--clr-primary);
-    color: var(--clr-secondary);
+    background-color: var(--clr-white);
+    color: var(--clr-green-main);
 }
 
 .btn:disabled {

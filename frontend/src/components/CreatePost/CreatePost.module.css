@@ -25,6 +25,7 @@
     border-radius: 1em;
     background: transparent;
     margin: 0;
+    color: var(--clr-black);
 }
 
 .text__content textarea:focus {

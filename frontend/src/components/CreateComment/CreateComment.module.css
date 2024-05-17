@@ -17,12 +17,14 @@
 
 .input::placeholder {
     font-size: inherit;
+    color: inherit;
 }
 
 .sendButton {
     position: absolute;
     right: .5em;
-    top: .5em;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     color: var(--clr-green-main);
 }

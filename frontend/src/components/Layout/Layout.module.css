@@ -11,11 +11,17 @@
     top: 0;
     left: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
     height: 4rem;
     max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .logoLink {
@@ -32,6 +38,10 @@
 .logoText {
     color: var(--clr-green-main);
     font-weight: var(--fw-bold);
+}
+
+.themeToggler {
+    cursor: pointer;
 }
 
 /* NAV */
@@ -60,16 +70,23 @@
     gap: .3rem;
     color: var(--clr-black);
     font-size: 1.5rem;
-    font-weight: var(--fw-bold);
     padding: .5rem;
     border-radius: .8rem;
     aspect-ratio: 1/1;
 }
 
+.navListItemLink:hover {
+    background-color: var(--clr-very-light-gray-text);
+    color: var(--clr-black);
+}
+
 .navListItemLinkActive {
     background-color: var(--clr-green-main);
-    color: var(--clr-white);
+    color: #fff;
+}
 
+.navListItemLinkActive .navListItemLinkText {
+    font-weight: var(--fw-bolder);
 }
 
 .navListItemLinkText {
@@ -79,6 +96,7 @@
 
 .addPostItem {
     display: none;
+    color: var(--clr-white);
 }
 
 .addPostBtn {
@@ -86,9 +104,9 @@
     align-items: center;
     gap: .3rem;
     background-color: var(--clr-green-main);
-    color: var(--clr-white);
+    color: var(--clr-light);
     font-size: 1.5rem;
-    font-weight: var(--fw-bold);
+    font-weight: var(--fw-regular);
     padding: .7rem 1rem;
     border-radius: 2rem;
     cursor: pointer;
@@ -157,6 +175,8 @@
     .navListItemLink {
         padding: .7rem 1rem;
         border-radius: 2rem;
+        background-color: transparent;
+        color: var(--clr-black)
     }
 
     .addPostItem {
