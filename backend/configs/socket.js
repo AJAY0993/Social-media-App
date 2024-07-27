@@ -48,4 +48,10 @@ io.on('connection', (socket) => {
   });
 });
 
-module.exports = { server, app, io, userIdToSocketIdMap, socketIdToUserIdMap };
+module.exports = {
+  server,
+  app,
+  io,
+  userIdToSocketIdMap,
+  socketIdToUserIdMap,
+};

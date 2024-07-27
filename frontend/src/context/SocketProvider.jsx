@@ -68,7 +68,6 @@ function SocketProvider({ children }) {
         "Someone is calling you Do you want to pick up the call?"
       )
 
-      console.log(accepted)
       if (accepted) {
         getUserMedia(
           { video: true, audio: true },

@@ -1,0 +1,22 @@
+.authButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--fw-medium);
+    letter-spacing: 1px;
+    gap: 1em;
+    width: 320px;
+    color: #000;
+    border-radius: .5em;
+    padding: .5em;
+    max-width: 100%;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #fff;
+    margin-top: 1em;
+    cursor: not-allowed;
+}
+
+.authButton img {
+    height: 25px;
+}

@@ -1,7 +1,6 @@
 // Packages
 const path = require('path');
 const express = require('express');
-const dotenv = require('dotenv');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -18,7 +17,6 @@ const commentRouter = require('./routes/commentRoutes');
 const globalErrorHandler = require('./contollers/errorController');
 const AppError = require('./utils/appError');
 
-dotenv.config();
 commentsNotification();
 
 // Middlewares
@@ -32,7 +30,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/dist')));
 
-// app.use('peerjs', peerServer);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/messages', messageRouter);

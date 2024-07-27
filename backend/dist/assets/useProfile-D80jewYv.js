@@ -1,1 +1,0 @@
-import{g as i,p as u,ag as n}from"./index-DqRnGjoO.js";function f(){const{userId:e,recieverId:r}=i(),{data:s,isLoading:o,error:a}=u({queryFn:()=>n(e||r),queryKey:[`user:${e}`]});return{profile:s,isProfileLoading:o,error:a}}export{f as u};

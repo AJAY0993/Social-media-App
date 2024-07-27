@@ -1,0 +1,6 @@
+.icon {
+    position: absolute;
+    height: 15px;
+    aspect-ratio: 1/1;
+    transform: translateY(-50%);
+}
