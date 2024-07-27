@@ -37,7 +37,7 @@
 .login__text {
     font-size: 14px;
     text-align: center;
-    color: #4A4A4A;
+    color: var(--clr-light);
 }
 
 .login__form {
@@ -48,6 +48,15 @@
 .link {
     color: var(--clr-main);
     text-decoration: underline;
+}
+
+.loginButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--fw-medium);
+    letter-spacing: 1px;
+    gap: 1em;
 }
 
 @media(width < 700px) {

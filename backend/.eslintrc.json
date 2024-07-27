@@ -1,21 +1,25 @@
 {
   "env": {
-    "browser": true,
     "commonjs": true,
-    "es2021": true
+    "es6": true,
+    "node": true
   },
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "prettier", "plugin:node/recommended"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": 2018
   },
+  "plugins": ["prettier"],
   "rules": {
-    "semi": "off",
-    "comma": "off",
-    "comma-dangle": "off",
-    "no-undef": "error",
-    "no-underscore-dangle": "off",
-    "quotes": ["error", "single"],
-    "linebreak-style": ["error", "windows"],
-    "consistent-return": "off"
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-plusplus": "off",
+    "no-process-exit": "off",
+    "class-methods-use-this": "off"
   }
 }

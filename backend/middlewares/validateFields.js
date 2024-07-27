@@ -12,7 +12,13 @@ const filterUnnecessaryFieldsAndAddImage = async (req, res, next) => {
   }
 
   const { email, username, profilePic, bio, firebaseToken } = req.body;
-  req.body = { email, username, profilePic, bio, firebaseToken };
+  req.body = {
+    email,
+    username,
+    profilePic,
+    bio,
+    firebaseToken,
+  };
   next();
 };
 

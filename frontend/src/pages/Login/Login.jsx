@@ -9,7 +9,9 @@ import { useForm } from "react-hook-form"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 import useLogin from "../../hooks/useLogin"
 import Button from "../../components/Button/Button"
+import AuthButton from "../../components/AuthButton/AuthButton"
 
+const testCredentials = { email: "drag@email.com", password: "12345678" }
 function Login() {
   const { login, isLoggingIn } = useLogin()
   const { register, handleSubmit, formState } = useForm()
@@ -59,10 +61,10 @@ function Login() {
                     <ErrorMessage message={errors.email.message} />
                   )}
                 </div>
-                <div>
+                <div className={styles.passwordInput}>
                   <input
-                    type="text"
-                    className="inp inp__secondary"
+                    type="password"
+                    className="relative inp inp__secondary"
                     placeholder="Enter your password"
                     {...register("password", {
                       required: "Please provide this field",
@@ -83,6 +85,13 @@ function Login() {
                 </div>
                 <Link className={styles.link} to="/forgotPassword">
                   Forgot password ?
+                </Link>{" "}
+                <br />
+                <Link
+                  className={styles.link}
+                  onClick={() => login(testCredentials)}
+                >
+                  continue with test credentials
                 </Link>
                 <Button type="primary" disabled={isLoggingIn}>
                   Log in
@@ -92,15 +101,14 @@ function Login() {
                 <span className={styles.line}>---------------</span>
                 <span>or with</span>
                 <span className={styles.line}>---------------</span>
-
-                <button className="btn btn__secondary" disabled={true}>
-                  <img src="images/icons/google.png" alt="google" /> Continue
-                  with google
-                </button>
-                <button className="btn btn__secondary">
-                  <img src="images/icons/twitter.png" alt="google" />
-                  Continue with twitter
-                </button>
+                <AuthButton
+                  text="Continue with google"
+                  icon="/images/icons/google.png"
+                />
+                <AuthButton
+                  text="Continue with twitter"
+                  icon="/images/icons/twitter.png"
+                />
                 <p className={styles.login__text}>
                   Dont have an account?{" "}
                   <Link className={styles.link} to="/signup">
@@ -116,7 +124,7 @@ function Login() {
   )
 }
 
-export async function action({ request, params }) {
+export async function action({ request }) {
   const formData = await request.formData()
   const email = formData.get("email")
   const password = formData.get("password")
